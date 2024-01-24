@@ -1,4 +1,4 @@
-# KingroonKP3SProV2 system image building and flashing tutorial
+# Kingroon KP3SPro V2 system image building and flashing tutorial
 
 ## Reasons
   - Realtek 8723BS is not working properly. It overloads the system. Bitrate can be very valueable and unstable. 
