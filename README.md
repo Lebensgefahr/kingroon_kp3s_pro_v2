@@ -68,7 +68,9 @@ Remove the bottom cover of your KP3SProV2 and unscrew two screws fastening the E
 Put the EMMC card into microSD adapter (supplied included) and insert it into your PC.
 Some adapters are not working with Makerbase EMMC-microSD adapter. For example Kingston MobiLite G4 is not working.
 <details>
-  <summary>But this works</summary>![But this one works](./pictures/SDCardAdapter.png)
+  <summary>But this works</summary>
+
+  ![But this one works](./pictures/SDCardAdapter.png)
 </details>
 
 After insertion of EMMC into USB appears a new block device like /dev/sdb in lsblk output:
