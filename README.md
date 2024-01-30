@@ -406,3 +406,6 @@ Recalibrate mesh and that is all. Now you can uninstall linux-headers to free so
 But it is good to have this package at hand in the target system. Before you turn the bottom cover back recommend you
 to make a backup image of your system as described in the beginning.
 Thanks for reading.
+
+After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
+But don't edit it. You can put chages inside your printer.cfg file. Except one function. Kingroon added IP determination as a python code.
