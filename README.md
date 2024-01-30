@@ -396,16 +396,23 @@ I didn't copy an old fluidd configuration and macroses but you can do that.
 
 ### Additional changes
 
+#### Inverse encoder rotation
+
 It was annoying that the encoder works in reverse. When it is rotating CW it decreases values but it should increase.
 All we need to do to fix that is to sweep its pins in printer.cfg. You can do it through fluidd interface in the Configuration tab.
 ```
 #encoder_pins:^PE13,^PE14
 encoder_pins:^PE14,^PE13
 ```
+#### Setup menu
+
+After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
+But don't edit it. You can put chages inside your printer.cfg file. Except one function. Kingroon added IP determination as a python code.
+
+### Final
+
 Recalibrate mesh and that is all. Now you can uninstall linux-headers to free some space. 
 But it is good to have this package at hand in the target system. Before you turn the bottom cover back recommend you
 to make a backup image of your system as described in the beginning.
 Thanks for reading.
 
-After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
-But don't edit it. You can put chages inside your printer.cfg file. Except one function. Kingroon added IP determination as a python code.
