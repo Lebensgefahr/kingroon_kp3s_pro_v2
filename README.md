@@ -358,7 +358,7 @@ make
 <details>
   <summary>Don't want to use external external SD card reader or copying files manually?</summary>
 
-FatFS library included in klipper repository has no long file names support enabled (why so?)
+FatFS module included in klipper repository has no long file names support enabled (why so?)
 We need to enable it.
 
 Edit file:
