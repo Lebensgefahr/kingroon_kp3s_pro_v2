@@ -395,8 +395,8 @@ Add the following lines to BOARD_DEFS dictionary:
         'spi_pins': "PC8,PD2,PC12",
         'cs_pin': "PC11",
         'skip_verify': True,
-        'firmware_path': "cheetah_v2.bin",
-     }
+        'firmware_path': "cheetah_v2.bin"
+    }
 
 ```
 ![Select compiling options](./pictures/klipper_fw_4.png)
@@ -414,6 +414,17 @@ Result:
 
 ![Select compiling options](./pictures/klipper_fw_5.png)
 
+Ignore this error.
+Now just need to turn printer off and on with poweroff command.
+After establishing ssh connection run the following command from the klipper directory:
+```bash
+
+ ./scripts/flash-sdcard.sh -c /dev/ttyS0 kp3s_pro_v2
+```
+It will compare flashed firmware with its image on the host system. If everything is ok then result will be:
+![Select compiling options](./pictures/klipper_fw_6.png)
+
+```
 
 </details>
 
