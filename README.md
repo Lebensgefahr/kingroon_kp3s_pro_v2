@@ -311,7 +311,8 @@ All described is suitable for Raspberry Pi RP2040. You can check if it is exists
 It should be something like this:
 ```
 Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
-``` 
+```
+Compile THR firmware and binary:
 <details>
   <summary>Select compiling options</summary>
 
@@ -319,7 +320,6 @@ Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
   ![Select the target board](./pictures/klipper_fw_2.png)
 </details>
 
-Compile THR firmware and binary:
 ```bash
 
 make
@@ -422,9 +422,8 @@ After establishing ssh connection run the following command from the klipper dir
  ./scripts/flash-sdcard.sh -c /dev/ttyS0 kp3s_pro_v2
 ```
 It will compare flashed firmware with its image on the host system. If everything is ok then result will be:
-![Select compiling options](./pictures/klipper_fw_6.png)
 
-```
+![Select compiling options](./pictures/klipper_fw_6.png)
 
 </details>
 
