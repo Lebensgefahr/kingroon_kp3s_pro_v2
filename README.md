@@ -300,17 +300,20 @@ Fluidd: 4
 After installation completed we need to compile new klipper firmware and 
 binary [read here](https://www.klipper3d.org/RPi_microcontroller.html) and [here](https://github.com/makerbase-mks/MKS-THR36-THR42-UTC).
 I tried to use a new binary with an old firmware but it is not completely compatible and throws an error.
-Run:
-```bash
-
-cd klipper &&
-make menuconfig
-```
 
 All described is suitable for Raspberry Pi RP2040. You can check if it is exists with command lsusb.
 It should be something like this:
 ```
 Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
+```
+
+#### Compile THR firmware and binary:
+
+Run:
+```bash
+
+cd /home/mks/klipper &&
+make menuconfig
 ```
 
 <details>
@@ -319,7 +322,7 @@ Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
   ![Select the target board](./pictures/klipper_fw_1.png)
 </details>
 
-Compile THR firmware and binary:
+
 
 ```bash
 
@@ -335,7 +338,7 @@ make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_rp2040_05034E955CC76258-if
 If everything is ok:
 ![Flashing success](./pictures/klipper_flashing_success.png)
 
-Compile firmware for MCU on motherboard (GD32F303VET6):
+#### Compile firmware for MCU on motherboard (GD32F303VET6):
 
 ```bash
 
@@ -429,7 +432,7 @@ It will compare flashed firmware with its image on the host system. If everythin
 </details>
 
 
-Install binary and systemd unit file:
+#### Install binary and systemd unit file:
 
 ```bash
 sudo ln -s $PWD/scripts/klipper-mcu.service /etc/systemd/system/
