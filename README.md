@@ -312,12 +312,14 @@ It should be something like this:
 ```
 Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
 ```
-Compile THR firmware and binary:
+
 <details>
   <summary>Select compiling options</summary>
 
   ![Select the target board](./pictures/klipper_fw_1.png)
 </details>
+
+Compile THR firmware and binary:
 
 ```bash
 
