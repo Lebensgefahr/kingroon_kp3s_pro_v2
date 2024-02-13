@@ -316,8 +316,7 @@ Compile THR firmware and binary:
 <details>
   <summary>Select compiling options</summary>
 
-  ![Select the kernel configuration](./pictures/klipper_fw_1.png)
-  ![Select the target board](./pictures/klipper_fw_2.png)
+  ![Select the target board](./pictures/klipper_fw_1.png)
 </details>
 
 ```bash
