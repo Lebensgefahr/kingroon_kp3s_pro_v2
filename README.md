@@ -354,7 +354,8 @@ make menuconfig
 
 make
 ```
-After building copy klipper.bin file to SD card with name cheetah_v2.bin (filename is important). Put SD card into printer card slot turn it off and on.
+After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). 
+Put SD card into printer card slot turn it off and on.
 
 <details>
   <summary>Don't want to use external external SD card reader or copying files manually?</summary>
