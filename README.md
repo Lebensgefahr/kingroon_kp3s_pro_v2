@@ -319,7 +319,7 @@ Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
   ![Select the target board](./pictures/klipper_fw_2.png)
 </details>
 
-Compile firmware and binary:
+Compile THR firmware and binary:
 ```bash
 
 make
@@ -333,6 +333,90 @@ make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_rp2040_05034E955CC76258-if
 ```
 If everything is ok:
 ![Flashing success](./pictures/klipper_flashing_success.png)
+
+Compile firmware for MCU on motherboard (GD32F303VET6):
+
+```bash
+
+make menuconfig
+```
+<details>
+  <summary>Select compiling options</summary>
+
+  ![Select compiling options](./pictures/klipper_fw_3.png)
+</details>
+
+```bash
+
+make
+```
+After building copy klipper.bin file to SD card with name cheetah_v2.bin (filename is important). Put SD card into printer card slot turn it off and on.
+
+<details>
+  <summary>Don't want to use external external SD card reader or copying files manually?</summary>
+
+FatFS library included in klipper repository has no long file names support enabled (why so?)
+We need to enable it.
+
+Edit file:
+```
+mcedit /home/mks/klipper/lib/fatfs/ffconf.h
+```
+Set:
+```
+#define FF_USE_LFN		0
+```
+to:
+```
+#define FF_USE_LFN		1
+```
+Edit file:
+```
+mcedit /home/mks/klipper/scripts/spi_flash/fatfs_lib.py
+```
+Set:
+```
+char     name[13];
+```
+to:
+```
+char     name[255];
+```
+Add board defenition:
+
+```
+mcedit /home/mks/klipper/scripts/spi_flash/board_defs.py
+```
+Add the following lines to BOARD_DEFS dictionary:
+```
+    'kp3s_pro_v2': {
+        'mcu': "stm32f103xe",
+        'spi_bus': "swspi",
+        'spi_pins': "PC8,PD2,PC12",
+        'cs_pin': "PC11",
+        'skip_verify': True,
+        'firmware_path': "cheetah_v2.bin",
+     }
+
+```
+![Select compiling options](./pictures/klipper_fw_4.png)
+
+SD card should be in printer SD card slot at this moment.
+Now run the following command:
+
+```bash
+
+./scripts/flash-sdcard.sh /dev/ttyS0 kp3s_pro_v2
+```
+Beeper will make the sound.
+
+Result:
+
+![Select compiling options](./pictures/klipper_fw_5.png)
+
+
+</details>
+
 
 Install binary and systemd unit file:
 
