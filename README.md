@@ -354,8 +354,6 @@ make menuconfig
 
 make
 ```
-After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). 
-Put SD card into printer card slot turn it off and on.
 
 <details>
   <summary>Don't want to use external external SD card reader or copying files manually?</summary>
@@ -431,6 +429,9 @@ It will compare flashed firmware with its image on the host system. If everythin
 ![Select compiling options](./pictures/klipper_fw_6.png)
 
 </details>
+
+After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). 
+Put SD card into printer card slot turn it off and on.
 
 
 #### Install binary and systemd unit file:
