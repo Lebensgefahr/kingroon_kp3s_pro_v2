@@ -279,7 +279,7 @@ Restart networking:
 sudo systemctl restart networking
 ```
 
-### Installation of klipper-mcu, klipper, moonraker, fluidd
+### Installation of klipper, moonraker, fluidd
 
 Work under mks user. Clone and use kiauh as described [Here](https://github.com/redrathnure/armbian-mkspi):
 
@@ -436,14 +436,7 @@ Put SD card into printer card slot turn it off and on.
 
 #### Install binary and systemd unit file:
 
-```bash
-sudo ln -s $PWD/scripts/klipper-mcu.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo ./scripts/flash-linux.sh
-```
-
 Check if the device in /dev/serial/by-id is available. In my case it was not. So turn the printer off and on.
-
 
 Now copy an old configuration files from the image mounted on the host machine:
 ```bash
@@ -487,9 +480,9 @@ LogsDirectory=moonraker
 Now stop all services, remove logs from printer_data directory and start them again.
 
 ```bash
-sudo systemctl stop moonraker.service klipper.service klipper-mcu.service && 
+sudo systemctl stop moonraker.service klipper.service && 
 rm -rf ~/printer_data/logs/{klip*,moon*} &&
-sudo systemctl start moonraker.service klipper.service klipper-mcu.service
+sudo systemctl start moonraker.service klipper.service
 ```
 Check logs in /var/log for them for errors.
 I didn't copy an old fluidd configuration and macroses but you can do that.
