@@ -323,12 +323,6 @@ make menuconfig
 </details>
 
 
-
-```bash
-
-make
-```
-
 Check if your MCU is available by path /dev/serial/by-id/. Otherwise try to turn your printer off and on.
 Instead of powering your printer off you can press RESET button under the cooler cover. 
 Flash MCU with compiled firmware:
