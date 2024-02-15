@@ -425,6 +425,7 @@ It will compare flashed firmware with its image on the host system. If everythin
 </details>
 
 After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important).
+Put SD card into printer card slot turn it off and on.
 
 <details>
   <summary>How to get an actual firmware file name</summary>
@@ -433,10 +434,6 @@ After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (fi
 
   ![Select compiling options](./pictures/cheetah_v2_swd_pins.jpg)
 </details>
-
-cheetah_v2_swd_pins.jpg
-Put SD card into printer card slot turn it off and on.
-
 
 #### Install binary and systemd unit file:
 
