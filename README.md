@@ -424,7 +424,16 @@ It will compare flashed firmware with its image on the host system. If everythin
 
 </details>
 
-After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). 
+After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important).
+
+<details>
+  <summary>How to get an actual firmware file name</summary>
+  If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
+  St-link can be connected to the pins shown on the picture.
+  ![Select compiling options](./pictures/cheetah_v2_swd_pins.jpg)
+</details>
+
+cheetah_v2_swd_pins.jpg
 Put SD card into printer card slot turn it off and on.
 
 
