@@ -16,7 +16,7 @@
   - USB Type C cable to connect the printer to PC for serial port connection.
   - Kingroon KP3SPro V2 with Cheetah V2.0 Motherboard (**WARNING. NOT Cheetah V2.2 (it has some difference. THR plate connected as serial and mcu as USB dev.**)
   - Plate in the extruder should be recognized in the printer OS as RP2040 (OpenMoko, Inc. rp2040)
-  - MKS EMMC Adapter V1.0 or analog (supplied included)
+  - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check [here](#booting from USB flash)**
   - microSD card reader suitable to work with EMMC (read below)
   - Virtual Machine or PC with Linux (i.e. Ubuntu/Xubuntu) and docker installed [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/)
   - Ability to solve common linux problems (missed dependencies, software and so on).
@@ -62,6 +62,38 @@ As the result of building you will get some files in an output directory as show
   **Armbian-unofficial_24.2.0-trunk_Mkspi_jammy_current_6.1.74.img**
 </details>
 
+### Booting from USB flash
+In case you do not want to disassemble the printer or you do not have an emmc adapter you can use USB flash drive.
+Prepare USB flash drive:
+
+```bash
+
+sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
+```
+And copy armbian image somewhere to root partiotion of this flash drive to have it after booting available.
+Then we need to boot printer from this USB flash drive. Uboot bootloader autoboot process can be interrupted by hiting any key. But it has no bootdelay for that by default. So you need to hiting any key too fast and sometimes it works. To do that you need to start serial communication program like minicom:
+
+```bash
+
+minicom -b 1500000 -D /dev/ttyUSB0
+```
+Baud rate should be 1500000 to see booting log corectly.
+Then reboot your printer and start hiting an any key as fast as you can :-) If failed reboot and try to hit faster.
+If success you will see an uboot prompt:
+```
+Hit any key to stop autoboot:  0 
+=>  
+=>  
+```
+
+Change boot_targets environment variable:
+
+```
+setenv boot_targets "usb0 mmc1 mmc0 pxe dhcp" 
+```
+By default the first booting device is mmc1.
+And type "boot".
+When it boots you should follow the provided steps (create root password, user etc). After that you can use dd to deploy armbian image to /dev/mmcblk1. Reboot and repeat the previous step. 
 ### Creating EMMC backup and preparing it for the first boot
 
 Remove the bottom cover of your KP3SProV2 and unscrew two screws fastening the EMMC module.
