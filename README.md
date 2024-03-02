@@ -16,7 +16,7 @@
   - USB Type C cable to connect the printer to PC for serial port connection.
   - Kingroon KP3SPro V2 with Cheetah V2.0 Motherboard (**WARNING. NOT Cheetah V2.2 (it has some difference. THR plate connected as serial and mcu as USB dev.**)
   - Plate in the extruder should be recognized in the printer OS as RP2040 (OpenMoko, Inc. rp2040)
-  - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check [here](#booting from USB flash)**
+  - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check** [here](#booting-from-USB-flash)
   - microSD card reader suitable to work with EMMC (read below)
   - Virtual Machine or PC with Linux (i.e. Ubuntu/Xubuntu) and docker installed [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/)
   - Ability to solve common linux problems (missed dependencies, software and so on).
