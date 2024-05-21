@@ -554,9 +554,18 @@ Thanks for reading.
 
 ### Difference between V2 hardware
 
-| V2.0 |V2.2|
-| Motherboard|
-|![](./pictures/diff/MB2.0.jpg)|![](./pictures/diff/MB2.2.jpg)|
-|THR|
-|![](./pictures/diff/THR_V1.0_1.jpg)|![](./pictures/diff/THR_V2.0_1.jpg)|
-|![](./pictures/diff/THR_V1.0_2.jpg)|![](./pictures/diff/THR_V2.0_2.jpg)|
+<table>
+  <tr>
+    <th>V2.0</th>
+    <th>V2.2</th>
+  </tr>
+  <tr>
+    <td> <img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 360px height = 640px ></td>
+    <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 360px height = 640px></td>
+  </tr>
+  <tr>
+    <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3" width = 360px height = 640px></td>
+    <td><img src="./pictures/diff/THR_V2.0_1.jpg" align="right" alt="4" width = 360px height = 640px></td>
+  </tr>
+</table>
+
