@@ -564,7 +564,7 @@ Thanks for reading.
       <ul>
         <li>THR MCU connected via USB</li>
         <li>MCU on the motherboard connected via UART</li>
-        <li>Thermal barrier cooller can't be controlled by MCU</li>
+        <li>Thermal barrier cooler can't be controlled by MCU</li>
         <li>THR plate can be flashed without disassembling</li>
         <li>It has Realtek 8723BS Wi-Fi adapter</li>
       </ul>
@@ -573,7 +573,7 @@ Thanks for reading.
       <ul>
         <li>THR MCU connected via UART</li>
         <li>MCU on the motherboard connected via USB</li>
-        <li>Thermal barrier cooller can be controlled by MCU</li>
+        <li>Thermal barrier cooler can be controlled by MCU</li>
         <li>THR plate can be flashed after disassembling and soldering pins to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
         <li>It has a different Wi-Fi adapter</li>
       </ul>
