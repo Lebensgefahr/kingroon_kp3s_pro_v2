@@ -552,3 +552,11 @@ But it is good to have this package at hand in the target system. Before you tur
 to make a backup image of your system as described in the beginning.
 Thanks for reading.
 
+### Difference between V2 hardware
+
+| V2.0 |V2.2|
+| Motherboard|
+|![](./pictures/diff/MB2.0.jpg)|![](./pictures/diff/MB2.2.jpg)|
+|THR|
+|![](./pictures/diff/THR_V1.0_1.jpg)|![](./pictures/diff/THR_V2.0_1.jpg)|
+|![](./pictures/diff/THR_V1.0_2.jpg)|![](./pictures/diff/THR_V2.0_2.jpg)|
