@@ -560,7 +560,7 @@ Thanks for reading.
     <th>V2.2</th>
   </tr>
   <tr>
-    <td>
+    <td width="50%">
       <ul>
         <li>THR MCU connected via USB</li>
         <li>MCU on the motherboard connected via UART</li>
@@ -569,7 +569,7 @@ Thanks for reading.
         <li>It has Realtek 8723BS Wi-Fi adapter</li>
       <ul>
     </td>
-    <td>
+    <td width="50%">
       <ul>
         <li>THR MCU connected via UART</li>
         <li>MCU on the motherboard connected via USB</li>
