@@ -562,8 +562,8 @@ Thanks for reading.
   <tr>
     <td colspan=2 align="center">Motherboard</td>
   <tr>
-    <td><img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 480px height = 480px ></td>
-    <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 480px height = 480px></td>
+    <td><img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 360px height = 360px ></td>
+    <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 360px height = 360px></td>
   </tr>
   <tr>
     <td colspan=2 align="center">THR</td>
