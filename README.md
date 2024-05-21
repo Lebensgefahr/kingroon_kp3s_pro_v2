@@ -567,7 +567,7 @@ Thanks for reading.
         <li>Thermal barrier cooller can't be controlled by MCU</li>
         <li>THR plate can be flashed without disassembling</li>
         <li>It has Realtek 8723BS Wi-Fi adapter</li>
-      <ul>
+      </ul>
     </td>
     <td width="50%">
       <ul>
@@ -576,7 +576,7 @@ Thanks for reading.
         <li>Thermal barrier cooller can be controlled by MCU</li>
         <li>THR plate can be flashed after disassembling and soldering pins to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
         <li>It has a different Wi-Fi adapter</li>
-      <ul>
+      </ul>
     </td>
   </tr>
   <tr>
