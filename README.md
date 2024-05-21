@@ -168,8 +168,8 @@ minicom -b 115200 -D /dev/ttyUSB0
 If everything is go as it should be you can see something like this in a terminal window:
 ![Console output](./pictures/serial_console_layout_1.png)
 
-After some minuts hit enter few times and you can get a greeting to login. Otherwise try to turn the printer off and on. 
-After printer is turned off wait until all LED are turned off especially LEDS on the motherboard. 
+After some minutes hit enter few times and you can get a greeting to login. Otherwise try to turn the printer off and on. 
+After printer is turned off wait until all LEDs are turned off especially LEDs on the motherboard.
 You can see it throught the bottom cooler holes on your table.
 This is important because the power supply keeps giving the energy to it during its capacitors are discharging.
 Login with root and password 1234 and answer all questions. 
@@ -464,7 +464,17 @@ Put SD card into printer card slot turn it off and on.
   If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
   St-link can be connected to the pins shown on the picture.
 
-  ![Select compiling options](./pictures/cheetah_v2_swd_pins.jpg)
+  ![SWD pins](./pictures/cheetah_v2_swd_pins.jpg)
+
+Command for openocd should be like this:
+
+```bash
+openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c init -c "reset halt" -c "flash read_bank 0 firmware.bin 0" -c "reset"
+
+```
+Firmware filename can be determined with strings:
+  ![Firmware name](./pictures/firmware_filename.png)
+
 </details>
 
 #### Install binary and systemd unit file:
