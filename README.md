@@ -560,6 +560,26 @@ Thanks for reading.
     <th>V2.2</th>
   </tr>
   <tr>
+    <td>
+      <ul>
+        <li>THR MCU connected via USB</li>
+        <li>MCU on the motherboard connected via UART</li>
+        <li>Thermal barrier cooller can't be controlled by MCU</li>
+        <li>THR plate can be flashed without disassembling</li>
+        <li>It has Realtek 8723BS Wi-Fi adapter</li>
+      <ul>
+    </td>
+    <td>
+      <ul>
+        <li>THR mcu connected via UART</li>
+        <li>mcu on the motherboard connected via USB</li>
+        <li>Thermal barrier cooller can be controlled by MCU<li>
+        <li>THR plate can be flashed after disassembling and soldering connectors to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
+        <li>It has a different Wi-Fi adapter</li>
+      <ul>
+    </td>
+  </tr>
+  <tr>
     <td colspan=2 align="center">Motherboard</td>
   <tr>
     <td><img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 360px height = 360px ></td>
