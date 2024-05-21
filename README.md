@@ -569,12 +569,12 @@ Thanks for reading.
     <td colspan=2>THR</td>
   <tr>
   <tr>
-    <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3"></td>
-    <td><img src="./pictures/diff/THR_V2.0_1.jpg" align="right" alt="4"></td>
+    <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3" width = 360px></td>
+    <td><img src="./pictures/diff/THR_V2.0_1.jpg" align="right" alt="4" width = 360px></td>
   </tr>
   <tr>
-    <td><img src="./pictures/diff/THR_V1.0_2.jpg" alt="3"></td>
-    <td><img src="./pictures/diff/THR_V2.0_2.jpg" align="right" alt="4"></td>
+    <td><img src="./pictures/diff/THR_V1.0_2.jpg" alt="3" width = 360px></td>
+    <td><img src="./pictures/diff/THR_V2.0_2.jpg" align="right" alt="4" width = 360px></td>
   </tr>
 </table>
 
