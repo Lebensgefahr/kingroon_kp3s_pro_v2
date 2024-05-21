@@ -560,13 +560,13 @@ Thanks for reading.
     <th>V2.2</th>
   </tr>
   <tr>
-    <td colspan=2>Motherboard</td>
+    <td colspan=2 align="center">Motherboard</td>
   <tr>
     <td><img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 480px height = 480px ></td>
     <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 480px height = 480px></td>
   </tr>
   <tr>
-    <td colspan=2>THR</td>
+    <td colspan=2 align="center">THR</td>
   <tr>
   <tr>
     <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3" width = 360px></td>
