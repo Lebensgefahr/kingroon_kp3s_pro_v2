@@ -571,10 +571,10 @@ Thanks for reading.
     </td>
     <td>
       <ul>
-        <li>THR mcu connected via UART</li>
-        <li>mcu on the motherboard connected via USB</li>
-        <li>Thermal barrier cooller can be controlled by MCU<li>
-        <li>THR plate can be flashed after disassembling and soldering connectors to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
+        <li>THR MCU connected via UART</li>
+        <li>MCU on the motherboard connected via USB</li>
+        <li>Thermal barrier cooller can be controlled by MCU</li>
+        <li>THR plate can be flashed after disassembling and soldering pins to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
         <li>It has a different Wi-Fi adapter</li>
       <ul>
     </td>
