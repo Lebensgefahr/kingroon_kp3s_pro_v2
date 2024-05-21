@@ -460,7 +460,7 @@ After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (fi
 Put SD card into printer card slot turn it off and on.
 
 <details>
-  ####<summary>How to get an actual firmware file name for mcu based on MB</summary>
+  <summary>How to get an actual firmware file name for mcu based on MB</summary>
   If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
   St-link can be connected to the pins shown on the picture.
 
