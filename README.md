@@ -560,12 +560,21 @@ Thanks for reading.
     <th>V2.2</th>
   </tr>
   <tr>
-    <td> <img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 360px height = 640px ></td>
-    <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 360px height = 640px></td>
+    <td colspan=2>Motherboard</td>
+  <tr>
+    <td> <img src="./pictures/diff/MB2.0.jpg"  alt="1" width = 480px height = 480px ></td>
+    <td><img src="./pictures/diff/MB2.2.jpg" alt="2" width = 480px height = 480px></td>
   </tr>
   <tr>
-    <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3" width = 360px height = 640px></td>
-    <td><img src="./pictures/diff/THR_V2.0_1.jpg" align="right" alt="4" width = 360px height = 640px></td>
+    <td colspan=2>THR</td>
+  <tr>
+  <tr>
+    <td><img src="./pictures/diff/THR_V1.0_1.jpg" alt="3"></td>
+    <td><img src="./pictures/diff/THR_V2.0_1.jpg" align="right" alt="4"></td>
+  </tr>
+  <tr>
+    <td><img src="./pictures/diff/THR_V1.0_2.jpg" alt="3"</td>
+    <td><img src="./pictures/diff/THR_V2.0_2.jpg" align="right" alt="4"></td>
   </tr>
 </table>
 
