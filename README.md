@@ -14,7 +14,7 @@
 ## Requirements
 
   - USB Type C cable to connect the printer to PC for serial port connection.
-  - Kingroon KP3SPro V2 with Cheetah V2.0 Motherboard (**WARNING. NOT Cheetah V2.2 (it has some [difference](#Difference-between-V2-hardware). THR plate connected as serial and mcu as USB dev. Moreover firmware image filename which bootloader should recognize is unknown**)
+  - Kingroon KP3SPro V2 with Cheetah V2.0 Motherboard (**WARNING. Cheetah V2.2 has some [difference](#Difference-between-V2-hardware).**)
   - Plate in the extruder should be recognized in the printer OS as RP2040 (OpenMoko, Inc. rp2040)
   - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check** [here](#booting-from-USB-flash)
   - microSD card reader suitable to work with EMMC (read below)
@@ -456,7 +456,8 @@ It will compare flashed firmware with its image on the host system. If everythin
 
 </details>
 
-After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important).
+After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). For cheetah V2.2 motherboard
+filename should be **cheetah_v2_2.bin**
 Put SD card into printer card slot turn it off and on.
 
 <details>
@@ -567,6 +568,7 @@ Thanks for reading.
         <li>Thermal barrier cooler can't be controlled by THR MCU</li>
         <li>THR plate can be flashed without disassembling</li>
         <li>It has Realtek 8723BS Wi-Fi adapter</li>
+        <li>Firmware file name written to SD card for flashing mcu should be cheetah_v2.bin</li>
       </ul>
     </td>
     <td width="50%" valign="top">
@@ -576,6 +578,7 @@ Thanks for reading.
         <li>Thermal barrier cooler can be controlled by THR MCU</li>
         <li>THR plate can be flashed after disassembling and soldering pins to USB contacts (you can see it on the picture below marked with 5V GND D+ D-)</li>
         <li>It has a different Wi-Fi adapter</li>
+        <li>Firmware file name written to SD card for flashing mcu should be cheetah_v2_2.bin</li>
       </ul>
     </td>
   </tr>
