@@ -331,7 +331,7 @@ Fluidd: 4
 
 After installation completed we need to compile new klipper firmware and 
 binary [read here](https://www.klipper3d.org/RPi_microcontroller.html) and [here](https://github.com/makerbase-mks/MKS-THR36-THR42-UTC).
-I tried to use a new binary with an old firmware but it is not completely compatible and throws an error.
+I tried to use a new klipper version with an old firmware but it is not completely compatible and throws an error.
 
 All described is suitable for Raspberry Pi RP2040. You can check if it is exists with command lsusb.
 It should be something like this:
@@ -344,8 +344,7 @@ Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
 Run:
 ```bash
 
-cd /home/mks/klipper &&
-make menuconfig
+cd /home/mks/klipper && make clean && make menuconfig
 ```
 
 <details>
@@ -389,9 +388,9 @@ make
 ```
 
 <details>
-  <summary>Don't want to use external external SD card reader or copying files manually?</summary>
-
-FatFS module included in klipper repository has no long file names support enabled (why so?)
+  <summary>Don't want to use external SD card reader or copying files manually?</summary>
+When this article was written it works but later I can't repeat it. It throws an error something like "There is no SD card in the slot".
+FatFS module included in klipper repository has no long file names support enabled.
 We need to enable it.
 
 Edit file:
@@ -535,7 +534,7 @@ sudo systemctl stop moonraker.service klipper.service &&
 rm -rf ~/printer_data/logs/{klip*,moon*} &&
 sudo systemctl start moonraker.service klipper.service
 ```
-Check logs in /var/log for them for errors.
+Check logs in /var/log for errors.
 I didn't copy an old fluidd configuration and macroses but you can do that.
 
 ### Additional changes
@@ -548,6 +547,18 @@ All we need to do to fix that is to sweep its pins in printer.cfg. You can do it
 #encoder_pins:^PE13,^PE14
 encoder_pins:^PE14,^PE13
 ```
+#### Turning on mesh fade
+
+Add options to configuration file in bed_mesh section to phasing out bed_mesh adjustment. By default fade_end is 0 and it means it is turned off.
+This options seamlessly disables the use of bed mesh. Otherwise, the curvature of the table will be kept throughout the entire height of the model.
+Of course you should use values which is lower than the height of the model.
+In this example fading starts at 1 mm height and ends at 5 mm.
+```
+[bed_mesh]
+fade_start: 1
+fade_end: 5
+```
+
 #### Setup menu
 
 After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
