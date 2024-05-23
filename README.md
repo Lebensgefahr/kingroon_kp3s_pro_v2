@@ -18,7 +18,7 @@
   - Plate in the extruder should be recognized in the printer OS as RP2040 (OpenMoko, Inc. rp2040)
   - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check** [here](#booting-from-USB-flash)
   - microSD card reader suitable to work with EMMC (read below)
-  - Virtual Machine or PC with Linux (i.e. Ubuntu/Xubuntu) and docker installed [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+  - Virtual Machine or PC with Linux (i.e. Ubuntu/Xubuntu) and docker installed [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - Ability to solve common linux problems (missed dependencies, software and so on).
   - Time and patience
 
