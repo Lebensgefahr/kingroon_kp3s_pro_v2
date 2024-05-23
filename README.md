@@ -552,6 +552,7 @@ encoder_pins:^PE14,^PE13
 Add options to configuration file in bed_mesh section to phasing out bed_mesh adjustment. By default fade_end is 0 and it means it is turned off.
 This options seamlessly disables the use of bed mesh. Otherwise, the curvature of the table will be kept throughout the entire height of the model.
 Of course you should use values which is lower than the height of the model. Read [here](https://www.klipper3d.org/Bed_Mesh.html#mesh-fade).
+
 In this example fading starts at 1 mm height and ends at 5 mm.
 ```
 [bed_mesh]
