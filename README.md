@@ -356,7 +356,7 @@ make menuconfig
 
 
 Check if your MCU is available by path /dev/serial/by-id/. Otherwise try to turn your printer off and on.
-Instead of powering your printer off you can press RESET button under the cooler cover. 
+Instead of powering your printer off you can press RESET button under the cooler cover.
 Flash MCU with compiled firmware:
 ```
 make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_rp2040_05034E955CC76258-if00
@@ -365,6 +365,13 @@ If everything is ok:
 ![Flashing success](./pictures/klipper_flashing_success.png)
 
 #### Compile firmware for MCU on motherboard (GD32F303VET6):
+
+You can check current compiling settings in klippy.log for both mcu.
+
+```
+Loaded MCU 'mcu' 105 commands (v0.11.0-122-ge6ef48cd-dirty-20230330_000318-mkspi / gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1)
+MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi3=PB4,PB5,PB3 CLOCK_FREQ=72000000 MCU=stm32f103xe PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_serial=PA10,PA9 SERIAL_BAUD=250000 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+```
 
 ```bash
 
