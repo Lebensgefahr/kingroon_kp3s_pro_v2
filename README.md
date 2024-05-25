@@ -361,19 +361,21 @@ cd /home/mks/klipper && make clean && make menuconfig
   ![](./pictures/rp2040_v22_2.jpg)
   ![](./pictures/rp2040_v22_3.jpg)
 
-  Before proceeding it is better to disconnect original cable from THR module (WARNING!!! It is possible to burn out motherboard if printer is on
-  during THR module disconnecting).
+  Before proceeding it is better to disconnect original cable from THR module (**WARNING!!! It is possible to burn out motherboard if printer is on
+  during THR module disconnecting**).
   After than connect your own USB cable and turn printer on. To flash rp2040 you can proceed for the next step or do it manually 
   <details>
     <summary>Manual flashing</summary>
-    1. Solder pins to the rp2040 board.
-    2. Build usb cable.
-    3. Connect USB cable to rp2040 (5V to 5V, G to G, Data + to Data +, Data - to Data -)
-    4. While holding down the "boot" button on the rp2040, plug in the USB cable to any PC that will automount a USB drive for you to access the files (Windows, Ubuntu Desktop, MAC, etc)
-    5. If done and wired correctly, a drive named "RP1-RP2" will be connected.
-    6. Copy the klipper.uf2 file to the "RP1-RP2" drive"
-    7. The rp2040 will immediately reboot itself and load the new firmware as soon as the file transfer is complete. This is normal.
-    8. Wait 30 seconds, then unplug the rp2040 and reinstall in the printer.
+    <ol>
+      <li>Solder pins to the rp2040 board.</li>
+      <li>Build usb cable.</li>
+      <li>Connect USB cable to rp2040 (5V to 5V, G to G, Data + to Data +, Data - to Data -)</li>
+      <li>While holding down the "boot" button on the rp2040, plug in the USB cable to any PC that will automount a USB drive for you to access the files (Windows, Ubuntu Desktop, MAC, etc)</li>
+      <li>If done and wired correctly, a drive named "RP1-RP2" will be connected.</li>
+      <li>Copy the klipper.uf2 file to the "RP1-RP2" drive"</li>
+      <li>The rp2040 will immediately reboot itself and load the new firmware as soon as the file transfer is complete. This is normal.</li>
+      <li>Wait 30 seconds, then unplug the rp2040 and reinstall in the printer.</li>
+    </ol>
   </details>
 
 </details>
