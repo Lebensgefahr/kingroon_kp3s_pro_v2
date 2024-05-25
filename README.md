@@ -348,9 +348,34 @@ cd /home/mks/klipper && make clean && make menuconfig
 ```
 
 <details>
-  <summary>Select compiling options</summary>
+  <summary>Select compiling options (it is equal for both THR v1.1 and v2.0)</summary>
 
   ![Select the target board](./pictures/klipper_fw_1.png)
+</details>
+
+<details>
+  <summary>Connect THR mcu as USB</summary>
+  You can disassembly an old mouse to get USB cable and JST-XH 2.5mm(2.54mm) connector.
+
+  ![](./pictures/rp2040_v22_1.jpg)
+  ![](./pictures/rp2040_v22_2.jpg)
+  ![](./pictures/rp2040_v22_3.jpg)
+
+  Before proceeding it is better to disconnect original cable from THR module (WARNING!!! It is possible to burn out motherboard if printer is on
+  during THR module disconnecting).
+  After than connect your own USB cable and turn printer on. To flash rp2040 you can proceed for the next step or do it manually 
+  <details>
+    <summary>Manual flashing</summary>
+    1. Solder pins to the rp2040 board.
+    2. Build usb cable.
+    3. Connect USB cable to rp2040 (5V to 5V, G to G, Data + to Data +, Data - to Data -)
+    4. While holding down the "boot" button on the rp2040, plug in the USB cable to any PC that will automount a USB drive for you to access the files (Windows, Ubuntu Desktop, MAC, etc)
+    5. If done and wired correctly, a drive named "RP1-RP2" will be connected.
+    6. Copy the klipper.uf2 file to the "RP1-RP2" drive"
+    7. The rp2040 will immediately reboot itself and load the new firmware as soon as the file transfer is complete. This is normal.
+    8. Wait 30 seconds, then unplug the rp2040 and reinstall in the printer.
+  </details>
+
 </details>
 
 
@@ -367,6 +392,7 @@ If everything is ok:
 
 You can check current compiling settings in klippy.log for both mcu.
 
+For example:
 ```
 Loaded MCU 'mcu' 105 commands (v0.11.0-122-ge6ef48cd-dirty-20230330_000318-mkspi / gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1)
 MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi3=PB4,PB5,PB3 CLOCK_FREQ=72000000 MCU=stm32f103xe PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_serial=PA10,PA9 SERIAL_BAUD=250000 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
@@ -377,10 +403,19 @@ MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_
 make menuconfig
 ```
 <details>
-  <summary>Select compiling options</summary>
+  <summary>Select compiling options V2.0</summary>
 
   ![Select compiling options](./pictures/klipper_fw_3.png)
 </details>
+
+<details>
+  <summary>Select compiling options V2.0</summary>
+
+  ![Select compiling options](./pictures/v22_compiling_1.png)
+</details>
+
+
+
 
 ```bash
 
