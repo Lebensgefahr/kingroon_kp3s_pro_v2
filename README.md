@@ -367,9 +367,6 @@ cd /home/mks/klipper && make clean && make menuconfig
   <details>
     <summary>Manual flashing</summary>
     <ol>
-      <li>Solder pins to the rp2040 board.</li>
-      <li>Build usb cable.</li>
-      <li>Connect USB cable to rp2040 (5V to 5V, G to G, Data + to Data +, Data - to Data -)</li>
       <li>While holding down the "boot" button on the rp2040, plug in the USB cable to any PC that will automount a USB drive for you to access the files (Windows, Ubuntu Desktop, MAC, etc)</li>
       <li>If done and wired correctly, a drive named "RP1-RP2" will be connected.</li>
       <li>Copy the klipper.uf2 file to the "RP1-RP2" drive"</li>
