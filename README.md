@@ -354,7 +354,7 @@ cd /home/mks/klipper && make clean && make menuconfig
 </details>
 
 <details>
-  <summary>Connect THR mcu as USB</summary>
+  <summary>Connect THR mcu as USB (for V2.2 version)</summary>
   You can disassembly an old mouse to get USB cable and JST-XH 2.5mm(2.54mm) connector.
 
   ![](./pictures/rp2040_v22_1.jpg)
@@ -408,7 +408,7 @@ make menuconfig
 </details>
 
 <details>
-  <summary>Select compiling options V2.0</summary>
+  <summary>Select compiling options V2.2</summary>
 
   ![Select compiling options](./pictures/v22_compiling_1.png)
 </details>
