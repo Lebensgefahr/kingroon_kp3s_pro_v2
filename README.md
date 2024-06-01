@@ -354,7 +354,7 @@ cd /home/mks/klipper && make clean && make menuconfig
 </details>
 
 <details>
-  <summary>Select compiling options V2.2 >
+  <summary>Select compiling options V2.2</summary>
 
   ![Select the target board](./pictures/rp2040_uart.png)
 </details>
