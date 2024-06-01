@@ -348,10 +348,17 @@ cd /home/mks/klipper && make clean && make menuconfig
 ```
 
 <details>
-  <summary>Select compiling options (it is equal for both THR v1.1 and v2.0)</summary>
+  <summary>Select compiling options V2.0</summary>
 
   ![Select the target board](./pictures/klipper_fw_1.png)
 </details>
+
+<details>
+  <summary>Select compiling options V2.2 >
+
+  ![Select the target board](./pictures/rp2040_uart.png)
+</details>
+
 
 <details>
   <summary>Connect THR mcu as USB (for V2.2 version)</summary>
