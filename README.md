@@ -78,7 +78,8 @@ Then we need to boot printer from this USB flash drive. Uboot bootloader autoboo
 minicom -b 1500000 -D /dev/ttyUSB0
 ```
 Baud rate should be 1500000 to see booting log corectly.
-Then reboot your printer and start hiting an any key as fast as you can :-) If failed reboot and try to hit faster.
+Then reboot your printer and start hiting an any key as fast as you can :-) If failed reboot and try to hit faster. You can reboot your printer
+through ssh (ssh mks@192.168.1.15 'reboot') and hold ESC button in terminal window (easier than hiting keys).
 If success you will see an uboot prompt:
 ```
 Hit any key to stop autoboot:  0 
