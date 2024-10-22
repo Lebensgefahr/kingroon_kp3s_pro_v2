@@ -26,6 +26,7 @@
 
 ### Building your own Armbian image
 
+**mkspi repo is not up to date and building process will fail. Try to follow this steps https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/issues/3#issuecomment-2333484221**
 First of all clone [mkspi repository](https://github.com/redrathnure/armbian-mkspi) and build your own Armbian image. Assumed docker is already installed and you can resolve any issues caused by missing dependencies.
 
 ```bash
