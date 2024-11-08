@@ -36,28 +36,37 @@ Main() {
 			# your code here
 			;;
 		jammy)
+                        set -ex
                         cp /tmp/overlay/rk3328-roc-cc.dtb /boot/dtb/rockchip/
 #                        cp /tmp/overlay/wpa_supplicant-wlan0.conf /etc/wpa_supplicant/
                         rm /root/.not_logged_in_yet
                         rm -f /etc/systemd/system/getty@.service.d/override.conf
                         rm -f /etc/systemd/system/serial-getty@.service.d/override.conf
                         useradd -m -s $(which bash) mks
-			for additionalgroup in sudo netdev audio video disk tty users games dialout plugdev input bluetooth systemd-journal ssh render; do
+                        cat /etc/group
+			for additionalgroup in sudo tty dialout; do
 			    usermod -aG "${additionalgroup}" mks 2> /dev/null
 			done
 cat <<EOF >/etc/sudoers.d/mks
 mks    ALL=NOPASSWD: ALL
 EOF
                         echo mks:makerbase | chpasswd
-			cd /home/mks && \
-                        sudo -u mks git clone https://github.com/dw-0/kiauh.git && \
-                        cd kiauh && \
-                        apt-get update && \
+			cd /home/mks
+                        sudo -u mks git clone https://github.com/dw-0/kiauh.git
+                        cd kiauh
+                        apt-get update
+                        sed -i 's/set -e/set -ex/' ./kiauh.sh
+                        sed -i 's/clear -x//' ./kiauh.sh
 			printf '2\n1\n1\n1\n1\n2\nY\n4\nn\nB\nQ\n' |sudo -u mks ./kiauh.sh
+                        echo "OS: $(cat /etc/issue)" >> /home/mks/versions
+                        echo "Kiauh: $(sudo -u mks git -C /home/mks/kiauh describe --tags)" >> /home/mks/versions
+                        echo "Klipper: $(sudo -u mks git -C /home/mks/klipper describe --tags)" >> /home/mks/versions
+                        echo "Moonraker: $(sudo -u mks git -C /home/mks/moonraker describe --tags)" >> /home/mks/versions
+                        echo "Fluidd: $(cat /home/mks/fluidd/release_info.json |jq -r .version)" >> /home/mks/versions
                         sudo -u mks cp /tmp/overlay/printer_data/config/* /home/mks/printer_data/config
                         cp /tmp/overlay/printer_data/systemd/* /home/mks/printer_data/systemd
 
-			mkdir /etc/systemd/system/klipper.service.d && \
+			mkdir /etc/systemd/system/klipper.service.d
                         mkdir /etc/systemd/system/moonraker.service.d
 
 cat <<EOF >/etc/systemd/system/klipper.service.d/override.conf

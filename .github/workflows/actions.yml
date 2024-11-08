@@ -17,7 +17,12 @@ jobs:
           git clone https://github.com/armbian/build.git
           cp ./files/config/boards/mkspi.conf ./build/config/boards/
           cp -r ./files/userpatches/ build
-          cd build && ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=full PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
+          cd build
+          ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=full PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
+          LOOP_DEV=$(sudo losetup --partscan --find --show ./output/images/*.img)
+          sudo mount "$LOOP_DEV"p2 /mnt
+          cp /mnt/home/mks/versions ..
+          sudo umount /mnt
 
       - name: Archiving artifacts
         run: cd build && zip -r output.zip output
@@ -30,6 +35,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: 'Release'
+          body_path: versions
           draft: false
           prerelease: false
 
