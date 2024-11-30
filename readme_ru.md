@@ -1,32 +1,33 @@
-# Kingroon KP3SPro V2 system image building and flashing tutorial
+# Kingroon KP3SPro V2 и KLP1 руководство по созданию образа системы и перепрошивке
 
-## Reasons
-  - Realtek 8723BS is not working properly. It overloads the system. Bitrate can be very valueable and unstable. 
-    Sometimes connection hanged. There is an alternative [Realtek 8723BS driver](https://github.com/youling257/rockchip_wlan). 
-    But if you want to compile it with the current kernel you will fail because there is no kernel headers with the right version 
-    compatible with the loaded kernel. Alternative driver is loading faster and works more stable.
-    It gives no highest speed but it gives a stability.
-  - Alternative driver gives an ability to change channel etc.
-  - System looks like it was used with different versions of mcu, has a lot of strange services and misconfigurations (i.e. damaged logrotate configuration files).
-  - Kingroon support didn't help. They just said "You can buy a wifi signal receiver yourself to increase the signal. In this case, the effect should be better." Of course i can buy another adapter and of course another printer. But it is already has embeded wifi adapter and there is a way to make it work better so why not?
-  - I want to dig deep into the setting process to develop my experience.
+## Причины
+  - Realtek 8723BS работает некорректно. Это приводит к перегрузке системы. Скорость передачи данных может быть очень низкой и нестабильной. 
+    Иногда соединение прерывается. Есть альтернатива [Realtek 8723BS driver](https://github.com/youling257/rockchip_wlan). 
+    Но если вы захотите скомпилировать его с текущим ядром, у вас ничего не получится, потому что нет заголовков ядра с нужной версией,
+    совместимой с загруженным ядром. Альтернативный драйвер загружается быстрее и работает стабильнее.
+    Он не обеспечивает максимальную скорость, но обеспечивает стабильность.
+  - Альтернативный драйвер дает возможность переключать каналы и т.д..
+  - Система выглядит так, как будто она использовалась с разными версиями mcu, имеет множество странных служб и неправильных настроек (например, поврежденные файлы конфигурации logrotate).
+  - Kingroon поддержка не помогла. Они просто сказали: "Вы можете сами купить приемник сигнала Wi-Fi, чтобы усилить сигнал. В этом случае эффект должен быть лучше". Конечно, я могу купить другой 
+    адаптер и, конечно, другой принтер. Но в него уже встроен wifi-адаптер, и есть способ заставить его работать лучше, так почему бы и нет?
+  - Я хочу углубиться в процесс настройки, чтобы поднять свой опыт.
 
-## Requirements
+## Требования
 
-  - USB Type C cable to connect the printer to PC for serial port connection.
-  - Kingroon KP3SPro V2 with Cheetah V2.0 Motherboard (**WARNING. Cheetah V2.2 has some [difference](#Difference-between-V2-hardware).**)
-  - Plate in the extruder should be recognized in the printer OS as RP2040 (OpenMoko, Inc. rp2040)
-  - MKS EMMC Adapter V1.0 or analog (supplied included). **It is possible to change system image without printer disassembling check** [here](#booting-from-USB-flash)
-  - microSD card reader suitable to work with EMMC (read below)
-  - Virtual Machine or PC with Linux (i.e. Ubuntu/Xubuntu) and docker installed [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-  - Ability to solve common linux problems (missed dependencies, software and so on).
-  - Time and patience
+  - Кабель USB Type C предназначен для подключения принтера к ПК через последовательный порт.
+  - Kingroon KP3SPro V2 с Cheetah V2.0 Motherboard (**Внимание!. Cheetah V2.2 имеет некоторые отличия [difference](#Difference-between-V2-hardware).**)
+  - Плата в экструдере должна быть распознана операционной системой принтера как RP2040 (OpenMoko, Inc. rp2040)
+  - MKS EMMC Adapter V1.0 или его аналог( у многих шел в комплекте с принтером). **Можно изменить системный образ, не разбирая принтер.** [здесь](#booting-from-USB-flash)
+  - microSD устройство для чтения карт памяти, подходящее для работы с EMMC (см. выше)
+  - Virtual Machine или ПК с Linux (i.e. Ubuntu/Xubuntu) и установленным docker  [install docker in ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+  - Способность решать распространенные проблемы Linux (пропущенные зависимости, программное обеспечение и так далее).
+  - Время и терпение :)
 
-## Let's start
+## Начнем
 
-### Building your own Armbian image
+### Создание собственного образа Armbian 
 
-**Don't want to build? Try this [one](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest)**. Klipper, Moonraker, Fluidd, printer.cfg and everything described in this article are included.
+**Не хотите собирать? Попробуйте [это](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest)**. Klipper, Moonraker, Fluidd, printer.cfg и все, что описано в этой статье, включено в нее.
 
 **mkspi repo is not up to date and building process will fail. Try to follow this steps https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/issues/3#issuecomment-2333484221**
 First of all clone [mkspi repository](https://github.com/redrathnure/armbian-mkspi) and build your own Armbian image. Assumed docker is already installed and you can resolve any issues caused by missing dependencies.
