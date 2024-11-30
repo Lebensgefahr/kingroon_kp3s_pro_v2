@@ -483,7 +483,7 @@ Add the following lines to BOARD_DEFS dictionary:
     }
 
 ```
-![Выбор опций для компиляции](./pictures/klipper_fw_4.png)
+![Select compiling options](./pictures/klipper_fw_4.png)
 
 В данный момент SD-карта должна быть вставлена в слот для SD-карты принтера.
 Теперь выполните следующую команду:
@@ -496,7 +496,7 @@ Beeper должен пиликнуть.
 
 Итог:
 
-![Выбор опций для компиляции](./pictures/klipper_fw_5.png)
+![Select compiling options](./pictures/klipper_fw_5.png)
 
 Игнорируйте эту ошибку.
 Теперь вам просто нужно выключить и снова включить принтер с помощью команды poweroff.
@@ -511,33 +511,32 @@ Beeper должен пиликнуть.
 
 </details>
 
-After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (filename is important). For cheetah V2.2 motherboard
-filename should be **cheetah_v2_2.bin**
-Put SD card into printer card slot turn it off and on.
+После сборки скопируйте файл klipper.bin на SD-карту с именем **cheetah_v2.bin** (имя файла важно). Для материнской платы cheetah V2.2
+имя файла должно быть **cheetah_v2_2.bin**
+Вставьте SD-карту в гнездо для карт памяти принтера, выключите и включите его.
 
 <details>
-  <summary>How to get an actual firmware file name for mcu based on MB</summary>
-  If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
-  St-link can be connected to the pins shown on the picture.
+  <summary>Как получить фактическое имя файла прошивки для mcu на основе MB</summary>
+  Если у вас есть программатор st-link, вы можете использовать его для дампа загрузчика и определения имени файла прошивки с помощью утилиты strings.
+ St-link можно подключить к контактам, показанным на рисунке.
 
   ![SWD pins](./pictures/cheetah_v2_swd_pins.jpg)
 
-Command for openocd should be like this:
+Команда для openocd должна быть такой:
 
 ```bash
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c init -c "reset halt" -c "flash read_bank 0 firmware.bin 0" -c "reset"
 
 ```
-Firmware filename can be determined with strings:
+Имя файла встроенного программного обеспечения можно определить с помощью strings:
   ![Firmware name](./pictures/firmware_filename.png)
 
 </details>
 
 #### Install binary and systemd unit file:
 
-Check if the device in /dev/serial/by-id is available. In my case it was not. So turn the printer off and on.
-
-Now copy an old configuration files from the image mounted on the host machine:
+Проверьте, доступно ли устройство в файле /dev/serial/by-id. В моем случае его не было. Поэтому выключите и снова включите принтер.
+Теперь скопируйте старые конфигурационные файлы из образа, смонтированого ранее или из бэкапа:
 ```bash
 
 scp /media/$USER/4148ed1f-7865-4fd6-84b0-9564c15dbeac/home/mks/printer_data/config/MKS_THR.cfg \
@@ -547,27 +546,27 @@ mks@192.168.1.15:/home/mks/printer_data/config/ &&
 scp /media/$USER/4148ed1f-7865-4fd6-84b0-9564c15dbeac/home/mks/printer_data/config/printer.cfg \
 mks@192.168.1.15:/home/mks/printer_data/config/
 ```
-I suggest you replace env files for systemd from this repository becuase service logs are located inside the printer_data directory
-but it is better to put them to RAM drive mounted to /var/log. So copy them to the printer and replace in ~/printer_data/systemd directory.
+Я предлагаю вам заменить файлы env на systemd из этого репозитория, потому что служебные журналы находятся в каталоге
+printer_data, но лучше поместить их на диск RAM, подключенный к /var/log. Поэтому скопируйте их на принтер и замените в каталоге ~/printer_data/systemd.
 
-Now we need to make some changes in systemd files.
+Теперь нам нужно внести некоторые изменения в системные файлы.
 
-Run:
+Выполните:
 ```bash
 
 sudo EDITOR=mcedit systemctl edit klipper.service
 ```
 
-And put the following content right in the place for them (read file content):
+И поместите следующий контент прямо в нужное для них место (прочитайте содержимое файла).:
 
 ```
 [Service]
 LogsDirectory=klipper
 RuntimeDirectory=klipper
 ```
-Save changes by hiting F2 and exit.
+Сохраните изменения, нажав клавишу F2 и завершив работу.
 
-Do the same for moonraker:
+Сделайте то же самое для moonraker:
 
 ```bash
 sudo EDITOR=mcedit systemctl edit moonraker.service
@@ -576,33 +575,33 @@ sudo EDITOR=mcedit systemctl edit moonraker.service
 [Service]
 LogsDirectory=moonraker
 ```
-Now stop all services, remove logs from printer_data directory and start them again.
+Теперь остановите все службы, удалите журналы из каталога printer_data и запустите их снова.
 
 ```bash
 sudo systemctl stop moonraker.service klipper.service && 
 rm -rf ~/printer_data/logs/{klip*,moon*} &&
 sudo systemctl start moonraker.service klipper.service
 ```
-Check logs in /var/log for errors.
-I didn't copy an old fluidd configuration and macroses but you can do that.
+Проверьте логи в/var/log на наличие ошибок.
+Я не копировал старую конфигурацию fluidd и макросы, но вы можете это сделать.
 
-### Additional changes
+### Дополнительные изменения
 
-#### Inverse encoder rotation
+#### Инверсия энкодера
 
-It was annoying that the encoder works in reverse. When it is rotating CW it decreases values but it should increase.
-All we need to do to fix that is to sweep its pins in printer.cfg. You can do it through fluidd interface in the Configuration tab.
+Меня раздражало, что энкодер работает в обратном направлении. Когда он вращается CW, значения уменьшаются, но должны увеличиваться.
+Все, что нам нужно сделать, чтобы исправить это, - это подмести контакты в printer.cfg. Вы можете сделать это через интерфейс fluidd на вкладке Configuration.
 ```
 #encoder_pins:^PE13,^PE14
 encoder_pins:^PE14,^PE13
 ```
 #### Turning on mesh fade
 
-Add options to configuration file in bed_mesh section to phasing out bed_mesh adjustment. By default fade_end is 0 and it means it is turned off.
-This options seamlessly disables the use of bed mesh. Otherwise, the curvature of the table will be kept throughout the entire height of the model.
-Of course you should use values which is lower than the height of the model. Read [here](https://www.klipper3d.org/Bed_Mesh.html#mesh-fade).
+Добавьте параметры в файл конфигурации в разделе bed_mesh, чтобы постепенно отменить настройку bed_mesh. По умолчанию значение fade_end равно 0, и это означает, что оно отключено.
+Эта опция полностью отключает использование bed mesh. В противном случае кривизна таблицы будет сохраняться по всей высоте модели.
+Конечно, вы должны использовать значения, которые меньше высоты модели. Читать [здесь](https://www.klipper3d.org/Bed_Mesh.html#mesh-fade).
 
-In this example fading starts at 1 mm height and ends at 5 mm.
+В этом примере выцветание начинается на высоте 1 мм и заканчивается на высоте 5 мм.
 ```
 [bed_mesh]
 fade_start: 1
@@ -611,15 +610,15 @@ fade_end: 5
 
 #### Setup menu
 
-After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
-But don't edit it. You can put chages inside your printer.cfg file. Except one function. Kingroon added IP determination as a python code.
+После обновления прошивки меню kingroon исчезнет. Вы можете вернуть его обратно, сравнив файл menu.cfg из изображения с новым.
+Но не редактируйте его. Вы можете поместить изменения в файл printer.cfg. За исключением одной функции. Kingroon добавил определение IP-адреса в виде кода на python.
 
 ### Final
 
-Recalibrate mesh and that is all. Now you can uninstall linux-headers to free some space. 
-But it is good to have this package at hand in the target system. Before you turn the bottom cover back recommend you
-to make a backup image of your system as described in the beginning.
-Thanks for reading.
+Выполните повторную калибровку mesh, и это все. Теперь вы можете удалить linux-headers, чтобы освободить место. 
+Но хорошо бы иметь этот пакет под рукой в целевой системе. Прежде чем открывать нижнюю крышку, рекомендуем
+создать резервную копию вашей системы, как описано в начале.
+Спасибо, что прочитали.
 
 ### Difference between V2 hardware
 
