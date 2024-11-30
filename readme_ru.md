@@ -15,7 +15,7 @@
 ## Требования
 
   - Кабель USB Type C предназначен для подключения принтера к ПК через последовательный порт.
-  - Kingroon KP3SPro V2 с Cheetah V2.0 Motherboard (**Внимание!. Cheetah V2.2 имеет некоторые отличия [difference](#Difference-between-V2-hardware).**)
+  - Kingroon KP3SPro V2 (KLP1) с Cheetah V2.0 Motherboard (**Внимание!. Cheetah V2.2 имеет некоторые отличия [difference](#Difference-between-V2-hardware).**)
   - Плата в экструдере должна быть распознана операционной системой принтера как RP2040 (OpenMoko, Inc. rp2040)
   - MKS EMMC Adapter V1.0 или его аналог( у многих шел в комплекте с принтером). **Можно изменить системный образ, не разбирая принтер.** [здесь](#booting-from-USB-flash)
   - microSD устройство для чтения карт памяти, подходящее для работы с EMMC (см. выше)
@@ -29,8 +29,8 @@
 
 **Не хотите собирать? Попробуйте [это](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest)**. Klipper, Moonraker, Fluidd, printer.cfg и все, что описано в этой статье, включено в нее.
 
-**mkspi repo is not up to date and building process will fail. Try to follow this steps https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/issues/3#issuecomment-2333484221**
-First of all clone [mkspi repository](https://github.com/redrathnure/armbian-mkspi) and build your own Armbian image. Assumed docker is already installed and you can resolve any issues caused by missing dependencies.
+**репозиторий mkspi не обновлен, и процесс сборки завершится ошибкой. Попробуйте выполнить следующие действия https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/issues/3#issuecomment-2333484221**
+Прежде всего, клонируйте [mkspi repository](https://github.com/redrathnure/armbian-mkspi) и создайте свой собственный образ Armbian. Предполагается, что docker уже установлен, и вы можете устранить любые проблемы, вызванные отсутствующими зависимостями.
 
 ```bash
 mkdir Kingroon && cd Kingroon && git clone https://github.com/redrathnure/armbian-mkspi && 
@@ -38,7 +38,7 @@ cd armbian-mkspi &&
 ./compile.sh
 ```
 <details>
-  <summary>Compile options could be something like on pictures below.</summary>
+  <summary>Параметры компиляции могут быть примерно такими, как показано на рисунках ниже.</summary>
 
   ![Select the kernel configuration](./pictures/armbian-mkspi_1.png)
   ![Select the target board](./pictures/armbian-mkspi_2.png)
@@ -49,56 +49,58 @@ cd armbian-mkspi &&
 
 </details>
 
-Now you just need to have patience (it takes about an hour depending on your PC hardware).
-As the result of building you will get some files in an output directory as shown on a picture.
+Теперь вам просто нужно набраться терпения (это займет около часа, в зависимости от быстродействия вашего ПК).
+В результате сборки вы получите несколько файлов в выходном каталоге, как показано на рисунке.
 
 <details>
   <summary>output directory tree</summary>
 
   ![Tree of the output directory](./pictures/armbian-mkspi_tree.png)
 
-  The required package to build Realtek 8723BS driver is located in debs directory:
+  Необходимый пакет для сборки драйвера Realtek 8723BS находится в каталоге debs:
 
   **linux-headers-current-rockchip64_24.2.0-trunk_arm64__6.1.74-S8fd7-Dfae2-P0da6-Cb86cHfe66-HK01ba-Vc222-B6a41-R448a.deb**
 
-  The Armbian image is located in images directory:
+  Изображение Armbian находится в каталоге images:
 
   **Armbian-unofficial_24.2.0-trunk_Mkspi_jammy_current_6.1.74.img**
 </details>
 
-### Booting from USB flash
-In case you do not want to disassemble the printer or you do not have an emmc adapter you can use USB flash drive.
-Prepare USB flash drive:
+### Загрузка с USB флэшки
+Если вы не хотите разбирать принтер или у вас нет адаптера emmc, вы можете воспользоваться USB-накопителем.
+Подготовьте USB-накопитель.:
 
 ```bash
 
 sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
 ```
-And copy armbian image somewhere to root partiotion of this flash drive to have it after booting available.
-Then we need to boot printer from this USB flash drive. Uboot bootloader autoboot process can be interrupted by hiting any key. But it has no bootdelay for that by default. So you need to hiting any key too fast and sometimes it works. To do that you need to start serial communication program like minicom:
+Пользователи Windows могут воспользоваться программой BalenaEtcher для записи образа на флэшку.
+
+И скопируйте образ armbian куда-нибудь в корневой раздел этой флешки, чтобы он был доступен после загрузки.
+Затем нам нужно загрузить принтер с этой флешки. Процесс автозагрузки Uboot bootloader может быть прерван нажатием любой клавиши. Но по умолчанию для этого нет задержки загрузки. Поэтому вам нужно нажимать любую клавишу слишком быстро, и иногда это срабатывает. Для этого вам нужно запустить программу последовательной связи, такую как minicom:
 
 ```bash
 
 minicom -b 1500000 -D /dev/ttyUSB0
 ```
-Baud rate should be 1500000 to see booting log corectly.
-Then reboot your printer and start hiting an any key as fast as you can :-) If failed reboot and try to hit faster. You can reboot your printer
-through ssh (ssh mks@192.168.1.15 'reboot') and hold ESC button in terminal window (easier than hiting keys).
-If success you will see an uboot prompt:
+Скорость передачи данных должна составлять 1500000 бод, чтобы правильно просматривать booting log.
+Затем перезагрузите принтер и начните нажимать на любую клавишу как можно быстрее :-) Если не удалось, перезагрузитесь и попробуйте нажимать быстрее. Вы можете перезагрузить принтер
+через ssh (ssh mks@192.168.1.15 "reboot") и удерживать кнопку ESC в окне терминала (проще, чем нажимать клавиши).
+В случае успеха вы увидите приглашение uboot prompt:
 ```
 Hit any key to stop autoboot:  0 
 =>  
 =>  
 ```
 
-Change boot_targets environment variable:
+Измените переменную окружения boot_targets:
 
 ```
 setenv boot_targets "usb0 mmc1 mmc0 pxe dhcp" 
 ```
-By default the first booting device is mmc1.
-And type "boot".
-When it boots you should follow the provided steps (create root password, user etc). After that you can use dd to deploy armbian image to /dev/mmcblk1. Reboot and repeat the previous step. 
+По умолчанию первым загрузочным устройством является mmc1.
+И напечатайте команду "boot".
+Когда он загрузится, вам следует выполнить указанные действия (создать пароль root, имя пользователя и т.д.). После этого вы можете использовать dd для развертывания образа armbian в /dev/mmcblk1. Перезагрузитесь и повторите предыдущий шаг.
 ### Creating EMMC backup and preparing it for the first boot
 
 Remove the bottom cover of your KP3SProV2 and unscrew two screws fastening the EMMC module.
