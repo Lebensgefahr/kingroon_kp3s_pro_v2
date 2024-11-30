@@ -77,14 +77,16 @@ sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=prog
 Пользователи Windows могут воспользоваться программой BalenaEtcher для записи образа на флэшку.
 
 И скопируйте образ armbian куда-нибудь в корневой раздел этой флешки, чтобы он был доступен после загрузки.
-Затем нам нужно загрузить принтер с этой флешки. Процесс автозагрузки Uboot bootloader может быть прерван нажатием любой клавиши. Но по умолчанию для этого нет задержки загрузки. Поэтому вам нужно нажимать любую клавишу слишком быстро, и иногда это срабатывает. Для этого вам нужно запустить программу последовательной связи, такую как minicom:
+Затем нам нужно загрузить принтер с этой флешки. Процесс автозагрузки Uboot bootloader может быть прерван нажатием любой клавиши. Но по умолчанию для этого нет задержки загрузки. Поэтому вам нужно нажимать любую клавишу слишком быстро, и иногда это срабатывает. Для этого вам нужно запустить программу последовательной связи, такую как minicom (для windows можно использовать Putty):
 
 ```bash
 
 minicom -b 1500000 -D /dev/ttyUSB0
 ```
 Скорость передачи данных должна составлять 1500000 бод, чтобы правильно просматривать booting log.
-Затем перезагрузите принтер и начните нажимать на любую клавишу как можно быстрее :-) Если не удалось, перезагрузитесь и попробуйте нажимать быстрее. Вы можете перезагрузить принтер
+
+Затем перезагрузите принтер и начните нажимать на любую клавишу как можно быстрее :-) Если не удалось, перезагрузитесь и попробуйте нажимать быстрее.
+Вы можете перезагрузить принтер
 через ssh (ssh mks@192.168.1.15 "reboot") и удерживать кнопку ESC в окне терминала (проще, чем нажимать клавиши).
 В случае успеха вы увидите приглашение uboot prompt:
 ```
@@ -101,22 +103,22 @@ setenv boot_targets "usb0 mmc1 mmc0 pxe dhcp"
 По умолчанию первым загрузочным устройством является mmc1.
 И напечатайте команду "boot".
 Когда он загрузится, вам следует выполнить указанные действия (создать пароль root, имя пользователя и т.д.). После этого вы можете использовать dd для развертывания образа armbian в /dev/mmcblk1. Перезагрузитесь и повторите предыдущий шаг.
-### Creating EMMC backup and preparing it for the first boot
+### Создание резервной копии EMMC и подготовка ее к первой загрузке
 
-Remove the bottom cover of your KP3SProV2 and unscrew two screws fastening the EMMC module.
-Put the EMMC card into microSD adapter (supplied included) and insert it into your PC.
-Some adapters are not working with Makerbase EMMC-microSD adapter. For example Kingston MobiLite G4 is not working.
+Снимите нижнюю крышку вашего KP3SProV2 (KLP1) и открутите два винта, которыми крепится модуль EMMC.
+Вставьте карту EMMC в адаптер microSD (входит в комплект поставки) и вставьте ее в компьютер.
+Некоторые адаптеры не работают с адаптером Makerbase EMMC-microSD. Например, не работает Kingston MobiLite G4.
 <details>
-  <summary>But this works</summary>
+  <summary>А это работает</summary>
 
-  ![But this one works](./pictures/SDCardAdapter.png)
+  ![А это работает](./pictures/SDCardAdapter.png)
 </details>
 
-After insertion of EMMC into USB appears a new block device like /dev/sdb in lsblk output:
+После вставки EMMC в USB на выходе lsblk появляется новое блочное устройство, подобное /dev/sdb:
 
 ![lsblk](./pictures/lsblk_emmc_1.png)
 
-Create backup of your current system:
+Создайте резервную копию вашей текущей системы:
 
 ```bash
 
@@ -124,22 +126,22 @@ mkdir backup &&
 sudo dd if=/dev/sdb of=./backup/backup.img bs=1M status=progress && 
 sync
 ```
-This image contains all files of your current system and it will be needed during next steps so we mount it right after dd completed.
+Этот образ содержит все файлы вашей текущей системы, и он понадобится на следующих шагах, поэтому мы монтируем его сразу после завершения dd.
 
 ```bash
 
 sudo losetup --partscan --find --show ./backup/backup.img
 ```
-In Xubuntu it will mount automatically to /media/$USER/ and commands are assumed that.
+В Xubuntu он будет автоматически монтироваться в /media/$USER/, и все команды будут указываться с учетом этого пути.
 
-Deploy an builded Armbian image to /dev/sdb
+Разверните созданный образ Armbian на /dev/sdb
 
 ```bash
 
 sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
 ```
-It will mount automatically again after dd finishes.
-Now we need to copy the linux-headers package and an old dtb file and old configurations to EMMC (with a new dtb wifi is not working).
+Он снова автоматически подключится после завершения dd.
+Теперь нам нужно скопировать пакет linux-headers, старый файл dtb и старые конфигурации в EMMC (с новым dtb wifi не работает).
 
 linux-headers package:
 ```bash
@@ -152,38 +154,37 @@ old dtb file:
 sudo mv /media/$USER/armbi_boot/dtb/rockchip/rk3328-roc-cc.dtb /media/$USER/armbi_boot/dtb/rockchip/rk3328-roc-cc.dtb.bck && 
 sudo cp /media/$USER/BOOT/dtb/rockchip/rk3328-roc-cc.dtb /media/$USER/armbi_boot/dtb/rockchip/rk3328-roc-cc.dtb
 ```
-Old configurations (check GUID in path to the mounted image of an old system):
+Старые конфигурации (проверьте GUID в поле путь к смонтированному образу старой системы):
 ```bash
 
 sudo cp -a /media/$USER/4148ed1f-7865-4fd6-84b0-9564c15dbeac/home/mks/printer_data /media/$USER/armbi_root/root/
 ```
-Now we are ready to turn back EMMC to the printer boot it and make the first login atempt.
-The first login we should do as root and with password 1234 (default for Armbian official image).
+Теперь мы готовы снова подключить EMMC к принтеру, загрузить его и выполнить первый вход в систему.
+Первый вход в систему мы должны выполнить от имени пользователя root и с паролем 1234 (по умолчанию для официального образа Armbian).
+### Первая загрузка и сборка kernel module
 
-### First boot and compiling kernel module
-
-Ethernet adapter should work so you can connect it to your router and try to enter with root through ssh if it is not disabled.
-Instead you can use USB type C cable and connect the printer to your PC (usb type-c socket is located on the front panel of the printer).
-Then you can use something like minicom to connect to the serial console of the printer.
-After is everything connected you can turn printer on and start minicom.
+Адаптер Ethernet должен работать, чтобы вы могли подключить его к своему маршрутизатору и попробовать войти с правами root через ssh, если он не отключен.
+Вместо этого вы можете использовать кабель USB type C и подключить принтер к пк (разъем usb type-c расположен на передней панели принтера KP3SProV2, для KLP1 необходимо снять крышку подвала и подключиться непосредственно к разъему на плате).
+Затем вы можете использовать что-то вроде minicom или putty для подключения к последовательной консоли принтера.
+После того, как все подключено, вы можете включить принтер и запустить minicom.
 
 ```bash
 
 minicom -b 115200 -D /dev/ttyUSB0
 ```
 
-If everything is go as it should be you can see something like this in a terminal window:
+Если все идет так, как должно быть, вы можете увидеть что-то подобное в окне терминала:
 ![Console output](./pictures/serial_console_layout_1.png)
 
-After some minutes hit enter few times and you can get a greeting to login. Otherwise try to turn the printer off and on. 
-After printer is turned off wait until all LEDs are turned off especially LEDs on the motherboard.
-You can see it throught the bottom cooler holes on your table.
-This is important because the power supply keeps giving the energy to it during its capacitors are discharging.
-Login with root and password 1234 and answer all questions. 
-It will create new user (I used mks with password makerbase as it should be from the box).
-You can try to connect via wireless but for me it doesn't work. So I skiped this stage.
-Now you can set wired connection manually and connect to the printer though ssh. 
-I connected the printer to laptop and use it as a router for the printer.
+Через несколько минут нажмите enter несколько раз, и вы получите приветствие для входа в систему. В противном случае попробуйте выключить и снова включить принтер. 
+После выключения принтера подождите, пока погаснут все светодиоды, особенно светодиоды на материнской плате.
+Вы можете увидеть это через нижние отверстия для охлаждения на вашем столе.
+Это важно, потому что блок питания продолжает подавать на него энергию во время разрядки конденсаторов.
+Войдите в систему с правами root и паролем 1234 и ответьте на все вопросы. 
+Это создаст нового пользователя (я использовал mks с паролем makerbase, как и должно быть из коробки).
+Вы можете попробовать подключиться по беспроводной сети, но у меня это не работает. Поэтому я пропустил этот этап.
+Теперь вы можете установить проводное соединение вручную и подключиться к принтеру через ssh. 
+Я подключил принтер к ноутбуку и использую его как маршрутизатор для принтера.
 
 <details>
   <summary>Configure laptop as router and printer as client manually</summary>
@@ -221,7 +222,7 @@ To have a key authorization you can run:
   ssh-copy-id mks@192.168.2.2
 ```
 
-Freeze important packages:
+Заморозьте важные пакеты:
 
 ```bash
 
@@ -229,7 +230,7 @@ armbian-config
 ```
 Choose System -> Freeze (Disable Armbian kernel packages)
 
-Create sudoers file to have sudo without a password:
+Создайте файл sudoers, чтобы использовать sudo без пароля:
 
 ```bash
 
@@ -238,7 +239,7 @@ mks    ALL=NOPASSWD: ALL
 EOF'
 ```
 
-Compile and install new driver [Armbian documentation](https://docs.armbian.com/User-Guide_Advanced-Features/#how-to-build-a-wireless-driver):
+Скомпилируйте и установите новый драйвер [Armbian documentation](https://docs.armbian.com/User-Guide_Advanced-Features/#how-to-build-a-wireless-driver):
 ```bash
 
 apt-get install -y libelf-dev &&
@@ -248,23 +249,23 @@ cd rockchip_wlan/rtl8723bs &&
 make ARCH=arm64
 ```
 
-Check if compiled module works:
+Проверьте, работает ли скомпилированный модуль:
 ```bash
 
 rmmod r8723bs &&
 insmod 8723bs.ko
 ```
 
-If everything is ok in dmesg will be something like this:
+Если все в порядке, то в dmesg будет что-то вроде этого:
 ![dmesg layout](./pictures/dmesg_8723bs.png)
 
-Now you can install it at the same place where an old is located:
+Теперь вы можете установить его в том же месте, где находится старый:
 
 ```bash
 
 make -B MODDESTDIR=/lib/modules/$(uname -r)/kernel/drivers/staging/rtl8723bs/ install
 ```
-Put an old driver to modprobe blacklist:
+Внесите старый драйвер в modprobe blacklist:
 
 ```bash
 
@@ -273,10 +274,10 @@ blacklist r8723bs
 EOF'
 ```
 
-### Network settings
+### Настройки сети
 
-Now you can reboot your printer by executing reboot command to check if the new module is loading.
-After reboot you can try to connect to a wireless network. Create wpa_supplicant.conf file:
+Теперь вы можете перезагрузить принтер, выполнив команду reboot, чтобы проверить, загружается ли новый модуль.
+После перезагрузки вы можете попробовать подключиться к беспроводной сети. Создайте файл wpa_supplicant.conf:
 
 ```bash
 sudo bash -c 'cat <<EOF >/etc/wpa_supplicant/wpa_supplicant-wlan0.conf
@@ -318,7 +319,7 @@ Restart networking:
 sudo systemctl restart networking
 ```
 
-### Installation of klipper, moonraker, fluidd
+### Установка klipper, moonraker, fluidd
 
 Work under mks user. Clone and use kiauh as described [Here](https://github.com/redrathnure/armbian-mkspi):
 
