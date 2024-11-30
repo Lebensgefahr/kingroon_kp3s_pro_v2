@@ -321,7 +321,7 @@ sudo systemctl restart networking
 
 ### Установка klipper, moonraker, fluidd
 
-Work under mks user. Clone and use kiauh as described [Here](https://github.com/redrathnure/armbian-mkspi):
+Работайте под именем пользователя mks. Клонируйте и используйте kiauh, как описано [здесь](https://github.com/redrathnure/armbian-mkspi):
 
 ```bash
 
@@ -329,7 +329,7 @@ git clone https://github.com/th33xitus/kiauh.git &&
 ./kiauh/kiauh.sh
 ```
 
-Select software to install.
+Выберите программное обеспечение для установки.
 
 Klipper: 1->1->1->1
 
@@ -337,19 +337,19 @@ Moonraker: 2
 
 Fluidd: 4
 
-After installation completed we need to compile new klipper firmware and 
-binary [read here](https://www.klipper3d.org/RPi_microcontroller.html) and [here](https://github.com/makerbase-mks/MKS-THR36-THR42-UTC).
-I tried to use a new klipper version with an old firmware but it is not completely compatible and throws an error.
+После завершения установки нам необходимо скомпилировать новую прошивку klipper и
+бинарник для платы в голове [читать здесь](https://www.klipper3d.org/RPi_microcontroller.html) и [здесь](https://github.com/makerbase-mks/MKS-THR36-THR42-UTC).
+Я попытался использовать новую версию klipper со старой прошивкой, но она не полностью совместима и выдает ошибку.
 
-All described is suitable for Raspberry Pi RP2040. You can check if it is exists with command lsusb.
-It should be something like this:
+Все описанное подходит для Raspberry Pi RP2040. Вы можете проверить, существует ли он, с помощью команды lsusb.
+Это должно быть что-то вроде этого:
 ```
 Bus 001 Device 002: ID 1d50:614e OpenMoko, Inc. **rp2040**
 ```
 
-#### Compile THR firmware and binary:
+#### Компиляция прошивки для THR:
 
-Run:
+Выполните:
 ```bash
 
 cd /home/mks/klipper && make clean && make menuconfig
@@ -369,44 +369,44 @@ cd /home/mks/klipper && make clean && make menuconfig
 
 
 <details>
-  <summary>Connect THR mcu as USB (for V2.2 version)</summary>
-  You can disassembly an old mouse to get USB cable and JST-XH 2.5mm(2.54mm) connector.
+  <summary>Соединение THR mcu по USB (for V2.2 version)</summary>
+  Вы можете разобрать старую мышь, чтобы получить USB-кабель и разъем JST-XH 2,5 мм (2,54 мм).
 
   ![](./pictures/rp2040_v22_1.jpg)
   ![](./pictures/rp2040_v22_2.jpg)
   ![](./pictures/rp2040_v22_3.jpg)
 
-  Before proceeding it is better to disconnect original cable from THR module (**WARNING!!! It is possible to burn out motherboard if printer is on
-  during THR module disconnecting**).
-  After than connect your own USB cable and turn printer on. To flash rp2040 you can proceed for the next step or do it manually 
+  Прежде чем продолжить, лучше отсоединить оригинальный кабель от модуля THR (**ВНИМАНИЕ!!! Материнская плата может сгореть, если принтер включен
+во время отключения модуля THR**).
+  После этого подключите свой собственный USB-кабель и включите принтер. Чтобы перепрошить rp2040, вы можете перейти к следующему шагу или сделать это вручную
   <details>
-    <summary>Manual flashing</summary>
+    <summary>Перепрошивка в ручную</summary>
     <ol>
-      <li>While holding down the "boot" button on the rp2040, plug in the USB cable to any PC that will automount a USB drive for you to access the files (Windows, Ubuntu Desktop, MAC, etc)</li>
-      <li>If done and wired correctly, a drive named "RP1-RP2" will be connected.</li>
-      <li>Copy the klipper.uf2 file to the "RP1-RP2" drive"</li>
-      <li>The rp2040 will immediately reboot itself and load the new firmware as soon as the file transfer is complete. This is normal.</li>
-      <li>Wait 30 seconds, then unplug the rp2040 and reinstall in the printer.</li>
+      <li>Удерживая нажатой кнопку "boot" на rp2040, подключите USB-кабель к любому компьютеру, который автоматически подключит USB-накопитель для доступа к файлам (Windows, Ubuntu Desktop, MAC и т.д.).</li>
+      <li>Если все сделано правильно и подключено правильно, то будет подключен привод с именем "RP1-RP2".</li>
+      <li>Скопируйте файл klipper.uf2 на диск "RP1-RP2"</li>
+      <li>rp2040 немедленно перезагрузится и загрузит новую прошивку, как только передача файла будет завершена. Это нормально.</li>
+      <li>Подождите 30 секунд, затем отключите rp2040 от сети и снова установите в принтер.</li>
     </ol>
   </details>
 
 </details>
 
 
-Check if your MCU is available by path /dev/serial/by-id/. Otherwise try to turn your printer off and on.
-Instead of powering your printer off you can press RESET button under the cooler cover.
-Flash MCU with compiled firmware:
+Проверьте, доступен ли ваш микроконтроллер по пути /dev/serial/by-id/. В противном случае попробуйте выключить и снова включить принтер.
+Вместо выключения питания принтера вы можете нажать кнопку сброса под крышкой кулера.
+Прошивка MCU собранным  firmware:
 ```
 make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_rp2040_05034E955CC76258-if00
 ```
-If everything is ok:
-![Flashing success](./pictures/klipper_flashing_success.png)
+Если все ок:
+![Прошивка удачна](./pictures/klipper_flashing_success.png)
 
-#### Compile firmware for MCU on motherboard (GD32F303VET6):
+#### Сборка прошивки для MCU на материнке (GD32F303VET6):
 
-You can check current compiling settings in klippy.log for both mcu.
+Вы можете проверить текущие настройки компиляции в klippy.log для обоих микроконтроллеров.
 
-For example:
+Для примера:
 ```
 Loaded MCU 'mcu' 105 commands (v0.11.0-122-ge6ef48cd-dirty-20230330_000318-mkspi / gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1)
 MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi3=PB4,PB5,PB3 CLOCK_FREQ=72000000 MCU=stm32f103xe PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_serial=PA10,PA9 SERIAL_BAUD=250000 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
@@ -437,10 +437,10 @@ make
 ```
 
 <details>
-  <summary>Don't want to use external SD card reader or copying files manually?</summary>
-When this article was written it works but later I can't repeat it. It throws an error something like "There is no SD card in the slot".
-FatFS module included in klipper repository has no long file names support enabled.
-We need to enable it.
+  <summary>Не хотите использовать внешний считыватель SD-карт или копировать файлы вручную?</summary>
+Когда была написана эта статья, это работало, но позже я не смог это повторить. Выдает ошибку, что-то вроде "В слоте нет SD-карты".
+В модуле FatFs, включенном в репозиторий klipper, не включена поддержка длинных имен файлов.
+Нам нужно включить это.
 
 Edit file:
 ```
@@ -483,31 +483,31 @@ Add the following lines to BOARD_DEFS dictionary:
     }
 
 ```
-![Select compiling options](./pictures/klipper_fw_4.png)
+![Выбор опций для компиляции](./pictures/klipper_fw_4.png)
 
-SD card should be in printer SD card slot at this moment.
-Now run the following command:
+В данный момент SD-карта должна быть вставлена в слот для SD-карты принтера.
+Теперь выполните следующую команду:
 
 ```bash
 
 ./scripts/flash-sdcard.sh /dev/ttyS0 kp3s_pro_v2
 ```
-Beeper will make the sound.
+Beeper должен пиликнуть.
 
-Result:
+Итог:
 
-![Select compiling options](./pictures/klipper_fw_5.png)
+![Выбор опций для компиляции](./pictures/klipper_fw_5.png)
 
-Ignore this error.
-Now just need to turn printer off and on with poweroff command.
-After establishing ssh connection run the following command from the klipper directory:
+Игнорируйте эту ошибку.
+Теперь вам просто нужно выключить и снова включить принтер с помощью команды poweroff.
+После установления ssh-соединения запустите следующую команду из каталога klipper:
 ```bash
 
  ./scripts/flash-sdcard.sh -c /dev/ttyS0 kp3s_pro_v2
 ```
-It will compare flashed firmware with its image on the host system. If everything is ok then result will be:
+Программа сравнит прошитую прошивку с ее образом в основной системе. Если все в порядке, то результат будет следующим:
 
-![Select compiling options](./pictures/klipper_fw_6.png)
+![Выбор опций для компиляции](./pictures/klipper_fw_6.png)
 
 </details>
 
