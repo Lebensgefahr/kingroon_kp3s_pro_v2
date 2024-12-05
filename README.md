@@ -633,6 +633,7 @@ Thanks for reading.
         <li>THR plate can be flashed without disassembling</li>
         <li>It has Realtek 8723BS Wi-Fi adapter</li>
         <li>Firmware file name written to SD card for flashing mcu should be cheetah_v2.bin</li>
+        <li>Has a supercapacitor that allows the operating system to shutdown correctly. System is online about 15 sec after switch was turned off. State can be checked by gpioget 2 16 (0 power is on/1 power is off)</li>
       </ul>
     </td>
     <td width="50%" valign="top">
