@@ -55,6 +55,7 @@ EOF
                         sudo -u mks git clone https://github.com/dw-0/kiauh.git
                         cd kiauh
                         apt-get update
+                        apt-get install -y gpiod
                         sed -i 's/set -e/set -ex/' ./kiauh.sh
                         sed -i 's/clear -x//' ./kiauh.sh
 			printf '2\n1\n1\n1\n1\n2\nY\n4\nn\nB\nQ\n' |sudo -u mks ./kiauh.sh
@@ -85,6 +86,20 @@ EOF
 			ln -s /var/log/nginx/fluidd-access.log /home/mks/printer_data/logs/fluidd-access.log
 			ln -s /var/log/klipper/fluidd-error.log /home/mks/printer_data/logs/fluidd-error.log
 			chage -d 0 root
+cat <<EOF >/lib/systemd/system/mks-shutdown.service
+[Unit]
+Description=MKS-shutdown
+After=network.target
+Wants=udev.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c '/usr/bin/gpiomon -s -n 1 -r 2 16 && /usr/sbin/poweroff'
+EOF
+                        systemctl enable mks-shutdown
 			;;
 	esac
 } # Main
