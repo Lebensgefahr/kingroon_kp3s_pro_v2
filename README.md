@@ -609,8 +609,8 @@ Firmware filename can be determined with strings:
 <details>
   <summary>Expand</summary>
 
-Full flash image and bootloader image can be found [here](files/firmware)
-Install openocd as a package or from sources first.
+Full flash image and bootloader image can be found [here](files/firmware).
+Install openocd as a package or from the sources first.
 
 Run openocd:
 ```bash
