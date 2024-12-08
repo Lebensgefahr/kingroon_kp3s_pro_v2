@@ -182,7 +182,7 @@ You can try to connect via wireless but for me it doesn't work. So I skiped this
 Now you can set wired connection manually and connect to the printer though ssh. 
 I connected the printer to laptop and use it as a router for the printer.
 
-#### Configure wired connection manually
+### Configure wired connection manually
 
 <details>
   <summary>Configure laptop as router and printer as client manually</summary>
@@ -648,7 +648,11 @@ wrote 524288 bytes from file firmware.bin to flash bank 0 at offset 0x00000000 i
 >reset
 
 ```
-After this it should beep once (bootloader makes this beep).
+After reset it should beep once (bootloader makes this beep).
+
+#### Known issues
+
+With stlink connected and powered on virtual end stop of X axis is not working !!!
 
 ### Additional changes
 
