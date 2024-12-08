@@ -182,8 +182,10 @@ You can try to connect via wireless but for me it doesn't work. So I skiped this
 Now you can set wired connection manually and connect to the printer though ssh. 
 I connected the printer to laptop and use it as a router for the printer.
 
+#### Configure wired connection manually
+
 <details>
-  <summary>####Configure laptop as router and printer as client manually</summary>
+  <summary>Configure laptop as router and printer as client manually</summary>
 
   Laptop:
 
@@ -443,6 +445,8 @@ make menuconfig
 
 make
 ```
+
+#### Write firmware image to SD card in the embeded slot of the printer.
 
 <details>
   <summary>Don't want to use external SD card reader or copying files manually?</summary>
