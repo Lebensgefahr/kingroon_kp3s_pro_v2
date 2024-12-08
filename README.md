@@ -446,8 +446,9 @@ make menuconfig
 make
 ```
 
+#### Write firmware image to SD card in printer slot.
 
-####<details>
+<details>
   <summary>Don't want to use external SD card reader or copying files manually?</summary>
 When this article was written it works but later I can't repeat it. It throws an error something like "There is no SD card in the slot".
 FatFS module included in klipper repository has no long file names support enabled.
@@ -585,7 +586,7 @@ I didn't copy an old fluidd configuration and macroses but you can do that.
 #### How to get firmware file name from bootloader
 
 <details>
-  <summary>How to get an actual firmware file name for mcu based on MB</summary>
+  <summary>Expand</summary>
   If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
   St-link can be connected to the pins shown on the picture.
 
@@ -605,6 +606,8 @@ Firmware filename can be determined with strings:
 
 #### How to flash default kingroon bootloader
 
+<details>
+  <summary>Expand</summary>
 Full flash image and bootloader image can be found [here](files/firmware)
 Install openocd as a package or from sources first.
 
@@ -648,6 +651,7 @@ wrote 524288 bytes from file firmware.bin to flash bank 0 at offset 0x00000000 i
 
 ```
 After reset it should beep once (bootloader makes this beep).
+</details>
 
 #### Known issues
 
