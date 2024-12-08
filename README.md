@@ -183,7 +183,7 @@ Now you can set wired connection manually and connect to the printer though ssh.
 I connected the printer to laptop and use it as a router for the printer.
 
 <details>
-  <summary>Configure laptop as router and printer as client manually</summary>
+  <summary>####Configure laptop as router and printer as client manually</summary>
 
   Laptop:
 
@@ -523,23 +523,6 @@ After building copy klipper.bin file to SD card with name **cheetah_v2.bin** (fi
 filename should be **cheetah_v2_2.bin**
 Put SD card into printer card slot turn it off and on.
 
-<details>
-  <summary>How to get an actual firmware file name for mcu based on MB</summary>
-  If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
-  St-link can be connected to the pins shown on the picture.
-
-  ![SWD pins](./pictures/cheetah_v2_swd_pins.jpg)
-
-Command for openocd should be like this:
-
-```bash
-openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c init -c "reset halt" -c "flash read_bank 0 firmware.bin 0" -c "reset"
-
-```
-Firmware filename can be determined with strings:
-  ![Firmware name](./pictures/firmware_filename.png)
-
-</details>
 
 #### Install binary and systemd unit file:
 
@@ -593,6 +576,75 @@ sudo systemctl start moonraker.service klipper.service
 ```
 Check logs in /var/log for errors.
 I didn't copy an old fluidd configuration and macroses but you can do that.
+
+### STLINK
+
+#### How to get firmware file name from bootloader
+
+<details>
+  <summary>How to get an actual firmware file name for mcu based on MB</summary>
+  If you have st-link programmer you can use it to dump bootloader and determine firmware file name with strings utility.
+  St-link can be connected to the pins shown on the picture.
+
+  ![SWD pins](./pictures/cheetah_v2_swd_pins.jpg)
+
+Command for openocd should be like this:
+
+```bash
+openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c init -c "reset halt" -c "flash read_bank 0 firmware.bin 0" -c "reset"
+
+```
+Firmware filename can be determined with strings:
+  ![Firmware name](./pictures/firmware_filename.png)
+
+</details>
+
+
+#### How to flash default kingroon bootloader
+
+Full flash image and bootloader image can be found [here](files/firmware)
+Install openocd as a package or from sources first.
+
+Run openocd:
+```bash
+sudo openocd -f interface/stlink.cfg -f target/stm32f1x.cfg
+```
+This command can be finished with error message something like "wrong ID number".
+It is because there is no stm32f103 on this board it has it's clone. Change ID in stm32f1x.cfg to match this criteria.
+
+In another windown run telnet inside directory where flash or bootloader image is located:
+
+```bash
+telnet 127.0.0.1 4444
+```
+Execute commands in telnet session:
+
+```
+> flash banks
+#0 : stm32f1x.flash (stm32f1x) at 0x08000000, size 0x00000000, buswidth 0, chipwidth 0
+> stm32f1x mass_erase 0
+Target not halted
+stm32x mass erase failed
+> halt
+[stm32f1x.cpu] halted due to debug-request, current mode: Handler HardFault
+xPSR: 0x21000003 pc: 0xfffffffe msp: 0xffffff90
+> stm32f1x mass_erase 0
+timed out waiting for flash
+stm32x mass erase failed
+jtag status contains invalid mode value - communication failure
+Polling target stm32f1x.cpu failed, trying to reexamine
+Examination failed, GDB will be halted. Polling again in 100ms
+Previous state query failed, trying to reconnect
+Polling target stm32f1x.cpu failed, trying to reexamine
+[stm32f1x.cpu] Cortex-M4 r0p1 processor detected
+[stm32f1x.cpu] target has 6 breakpoints, 4 watchpoints
+> flash write_bank 0 firmware.bin
+Padding at 0x08000bd7 with 1 bytes (bank write end alignment)
+wrote 524288 bytes from file firmware.bin to flash bank 0 at offset 0x00000000 in 15.199426s (33.685 KiB/s)
+>reset
+
+```
+After this it should beep once (bootloader makes this beep).
 
 ### Additional changes
 
