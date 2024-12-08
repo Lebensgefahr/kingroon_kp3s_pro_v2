@@ -446,9 +446,8 @@ make menuconfig
 make
 ```
 
-#### Write firmware image to SD card in the embeded slot of the printer.
 
-<details>
+####<details>
   <summary>Don't want to use external SD card reader or copying files manually?</summary>
 When this article was written it works but later I can't repeat it. It throws an error something like "There is no SD card in the slot".
 FatFS module included in klipper repository has no long file names support enabled.
