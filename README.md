@@ -693,6 +693,27 @@ But it is good to have this package at hand in the target system. Before you tur
 to make a backup image of your system as described in the beginning.
 Thanks for reading.
 
+### Additional information
+
+####rp2040 GPIO
+
+![GPIO layout](./pictures/gpio.jpg)
+
+Configure this gpio as output_pin and you can check it with set_pin g-command
+
+```
+[output_pin gpio11]
+pin: MKS_THR:gpio11
+
+[output_pin gpio29]
+pin: MKS_THR:gpio29
+
+```
+
+```
+set_pin pin=gpio11 value=1
+```
+
 ### Difference between V2 hardware
 
 <table>
