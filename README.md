@@ -695,7 +695,7 @@ Thanks for reading.
 
 ### Additional information
 
-####rp2040 GPIO
+#### rp2040 GPIO
 
 ![GPIO layout](./pictures/gpio.jpg)
 
