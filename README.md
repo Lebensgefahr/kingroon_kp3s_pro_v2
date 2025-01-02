@@ -74,11 +74,11 @@ Prepare USB flash drive:
 sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
 ```
 And copy armbian image somewhere to root partiotion of this flash drive to have it after booting available.
-Then we need to boot printer from this USB flash drive. Uboot bootloader autoboot process can be interrupted by hiting any key. But it has no bootdelay for that by default. So you need to hiting any key too fast and sometimes it works. To do that you need to start serial communication program like minicom:
+Then we need to boot printer from this USB flash drive. Uboot bootloader autoboot process can be interrupted by hiting any key. But it has no bootdelay for that by default. So you need to hiting any key too fast and sometimes it works. To do that you need to start serial communication program like picocom:
 
 ```bash
+picocom --b 1500000 /dev/ttyUSB0
 
-minicom -b 1500000 -D /dev/ttyUSB0
 ```
 Baud rate should be 1500000 to see booting log corectly.
 Then reboot your printer and start hiting an any key as fast as you can :-) If failed reboot and try to hit faster. You can reboot your printer
@@ -161,12 +161,12 @@ The first login we should do as root and with password 1234 (default for Armbian
 
 Ethernet adapter should work so you can connect it to your router and try to enter with root through ssh if it is not disabled.
 Instead you can use USB type C cable and connect the printer to your PC (usb type-c socket is located on the front panel of the printer).
-Then you can use something like minicom to connect to the serial console of the printer.
-After is everything connected you can turn printer on and start minicom.
+Then you can use something like picocom to connect to the serial console of the printer.
+After is everything connected you can turn printer on and start picocom.
 
 ```bash
+picocom --b 1500000 /dev/ttyUSB0
 
-minicom -b 115200 -D /dev/ttyUSB0
 ```
 
 If everything is go as it should be you can see something like this in a terminal window:
@@ -302,7 +302,7 @@ Enable wpa_supplicant on wlan0 interface:
 sudo systemctl enable wpa_supplicant@wlan0 &&
 sudo systemctl start wpa_supplicant@wlan0
 ```
-Run **wpa_cli** in console and enter the following commads ONE BY ONE finish with <ENTER>:
+Run **wpa_cli** in console and enter the following commads ONE BY ONE finish with ENTER:
 ```
 add_network
 set_network 0 ssid "YOUR_SSID"
