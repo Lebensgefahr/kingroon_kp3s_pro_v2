@@ -686,6 +686,11 @@ fade_end: 5
 After updating firmware of THR kingroon menu will dissapear. You can turn it back by comparing menu.cfg file from the image with the new one.
 But don't edit it. You can put chages inside your printer.cfg file. Except one function. Kingroon added IP determination as a python code.
 
+#### LEDs
+
+There is a chain of three WS2812 on display PCB and you can use it for your needs like printer status signalization.
+You can check leds.cfg as example. Printer changes it's color during homing/printing/heating etc.
+
 ### Final
 
 Recalibrate mesh and that is all. Now you can uninstall linux-headers to free some space. 
