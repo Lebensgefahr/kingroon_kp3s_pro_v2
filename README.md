@@ -704,6 +704,9 @@ You can check leds.cfg as example. Printer changes it's color during homing/prin
 
 #### rp2040 GPIO
 
+<details>
+  <summary>Expand</summary>
+
 ![GPIO layout](./pictures/gpio.jpg)
 
 Configure this gpio as output_pin and you can check it with set_pin g-command
@@ -720,6 +723,8 @@ pin: MKS_THR:gpio29
 ```
 set_pin pin=gpio11 value=1
 ```
+</details>
+
 ### Heatbreak cooler controller.
 
 <details>
