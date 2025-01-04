@@ -730,7 +730,7 @@ set_pin pin=gpio11 value=1
 <details>
   <summary>Expand</summary>
   THR v1.0 plate has no mosfet for heatbreak cooler. You can install it by yourself as shown on the pictures below.
-  I bought a mosfet module for Arduino cut it and soldered it directly to pins GND 5V S.
+  I bought a mosfet module for Arduino cut it and solder it directly to GND 5V S pins.
   WARNING!!! 5V and S holes on mosfet module PCB are connected together. This connection should be broken before soldering.
   Pins GND Z+ should be cut as short as possible.
 
