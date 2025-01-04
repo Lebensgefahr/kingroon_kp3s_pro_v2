@@ -658,6 +658,14 @@ After reset it should beep once (bootloader makes this beep).
 
 With stlink connected and powered on virtual end stop of X axis is not working !!!
 
+### Final
+
+Recalibrate mesh and that is all. Now you can uninstall linux-headers to free some space. 
+But it is good to have this package at hand in the target system. Before you turn the bottom cover back recommend you
+to make a backup image of your system as described in the beginning.
+Thanks for reading.
+
+
 ### Additional changes
 
 #### Inverse encoder rotation
@@ -691,12 +699,6 @@ But don't edit it. You can put chages inside your printer.cfg file. Except one f
 There is a chain of three WS2812 on display PCB and you can use it for your needs like printer status signalization.
 You can check leds.cfg as example. Printer changes it's color during homing/printing/heating etc.
 
-### Final
-
-Recalibrate mesh and that is all. Now you can uninstall linux-headers to free some space. 
-But it is good to have this package at hand in the target system. Before you turn the bottom cover back recommend you
-to make a backup image of your system as described in the beginning.
-Thanks for reading.
 
 ### Additional information
 
@@ -718,6 +720,30 @@ pin: MKS_THR:gpio29
 ```
 set_pin pin=gpio11 value=1
 ```
+### Heatbreak cooler controller.
+
+<details>
+  <summary>Expand</summary>
+  THR v1.0 plate has no mosfet for heatbreak cooler. You can install it by yourself as shown on the pictures below.
+  I bought a mosfet module for Arduino cut it and soldered it directly to pins GND 5V S.
+  WARNING!!! 5V and S holes on mosfet module PCB are connected together. This connection should be broken before soldering.
+
+  ![Module](./pictures/mosfet/1.jpg)
+  ![Cutting](./pictures/mosfet/2.jpg)
+  ![Ready](./pictures/mosfet/3.jpg)
+  ![Assembled](./pictures/mosfet/4.jpg)
+
+After everything is assembled, it is enough to add the following to the printer config:
+
+```
+[heater_fan heatbreak_cooling_fan]
+pin: MKS_THR:gpio11
+heater: extruder
+heater_temp: 50.0
+```
+</details>
+
+
 
 ### Difference between V2 hardware
 
