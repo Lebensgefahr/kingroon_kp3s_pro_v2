@@ -781,13 +781,15 @@ cd ~/katapult && ./scripts/flashtool.py -d /dev/ttyS0 -b 250000
 ```
 By default, flashtool.py will use the klipper.bin file located in the ~/klipper/out directory. 
 You can also use flashtool.py to redeploy Katapult if you need to change the application offset or make other modifications.
-Once flashing is complete, Klipper should start immediately.
+Once flashing is complete, Klipper should start immediately. File to use instead of ~/klipper/out/klipper.bin can be specified
+with `-f` parameter.
 
 For subsequent firmware updates, you can use a special Klipper command to put the MCU into bootloader mode.
 
 Commands for both virtual serial and physical serial devices are already implemented in flashtool.py, 
 but the pull request has not yet been merged. The updated version of flashtool.py 
-can be downloaded from [here](https://github.com/Lebensgefahr/katapult/scripts)
+can be downloaded from [here](https://github.com/Lebensgefahr/katapult/tree/master/scripts). 
+Documentation [Bootloader Entry](https://github.com/Klipper3d/klipper/blob/master/docs/Bootloader_Entry.md)
 
 To request Klipper to boot into the bootloader, use the following command:
 
