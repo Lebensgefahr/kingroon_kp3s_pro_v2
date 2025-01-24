@@ -749,6 +749,60 @@ heater_temp: 50.0
 ```
 </details>
 
+### Katapult bootloader
+
+<details>
+  <summary>Expand</summary>
+
+With the default bootloader, the firmware can only be changed using an SD card. This is not convenient.
+
+Clone Katapult repository and build it:
+
+```bash
+git clone https://github.com/Arksine/katapult.git && cd katapult && make menuconfig && make
+```
+
+Katapult can deploy itself using the Katapult deployer. Important: Ensure all the settings match those shown in the following image.
+Warning: If an error occurs during deployment, your MCU may become bricked. Recovery will only be possible using an ST-Link.
+
+![Katapult settings](./katapult/settings.png)
+
+The Katapult deployer offset must match the current application offset used when building Klipper. 
+Since this printer does not have a status LED, the beeper can be used to indicate status. 
+The sound will confirm that the MCU has booted into Katapult.
+To deploy Katapult, copy the out/deployer.bin file to the SD card as cheetah_v2.bin, then restart the printer. 
+If the deployment is successful, the printer will start beeping. 
+Once Katapult deploys itself, it sets a "magic key" to ensure it remains in the bootloader during the next boot.
+
+Now, build the Klipper firmware with an 8 KiB offset (this is the new application offset) and flash it using flashtool.py:
+
+```bash
+cd ~/katapult && ./scripts/flashtool.py -d /dev/ttyS0 -b 250000
+```
+By default, flashtool.py will use the klipper.bin file located in the ~/klipper/out directory. 
+You can also use flashtool.py to redeploy Katapult if you need to change the application offset or make other modifications.
+Once flashing is complete, Klipper should start immediately.
+
+For subsequent firmware updates, you can use a special Klipper command to put the MCU into bootloader mode.
+
+Commands for both virtual serial and physical serial devices are already implemented in flashtool.py, 
+but the pull request has not yet been merged. The updated version of flashtool.py 
+can be downloaded from [here](https://github.com/Lebensgefahr/katapult/scripts)
+
+To request Klipper to boot into the bootloader, use the following command:
+
+```bash
+./scripts/flashtool.py -d /dev/ttyS0 -b 250000 -r
+```
+After executing this command, the printer should start beeping, as we have configured PC5 to function as a status LED.
+
+You can also check if the bootloader is available by running:
+
+```bash
+./scripts/flashtool.py -d /dev/ttyS0 -b 250000 -q
+```
+
+</details>
 
 
 ### Difference between V2 hardware
