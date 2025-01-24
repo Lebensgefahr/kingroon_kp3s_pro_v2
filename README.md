@@ -765,7 +765,7 @@ git clone https://github.com/Arksine/katapult.git && cd katapult && make menucon
 Katapult can deploy itself using the Katapult deployer. Important: Ensure all the settings match those shown in the following image.
 Warning: If an error occurs during deployment, your MCU may become bricked. Recovery will only be possible using an ST-Link.
 
-![Katapult settings](./katapult/settings.png)
+![Katapult settings](./pictures/katapult/settings.png)
 
 The Katapult deployer offset must match the current application offset used when building Klipper. 
 Since this printer does not have a status LED, the beeper can be used to indicate status. 
