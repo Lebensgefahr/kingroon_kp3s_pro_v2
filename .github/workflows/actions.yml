@@ -15,7 +15,6 @@ jobs:
       - name: Build image
         run: |
           git clone https://github.com/armbian/build.git
-          cp ./files/config/boards/mkspi.conf ./build/config/boards/
           cp -r ./files/userpatches/ build
           cd build
           ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=full PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
