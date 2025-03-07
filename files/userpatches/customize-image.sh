@@ -60,6 +60,7 @@ EOF
                         sed -i 's/clear -x//' ./kiauh.sh
 			printf '2\n1\n1\n1\n1\n2\nY\n4\nn\nB\nQ\n' |sudo -u mks ./kiauh.sh
                         echo "OS: $(cat /etc/issue)" >> /home/mks/versions
+                        echo "Kernel: $(strings /boot/Image |awk '/Linux version/ {print $3; exit}')" >>/home/mks/versions
                         echo "Kiauh: $(sudo -u mks git -C /home/mks/kiauh describe --tags)" >> /home/mks/versions
                         echo "Klipper: $(sudo -u mks git -C /home/mks/klipper describe --tags)" >> /home/mks/versions
                         echo "Moonraker: $(sudo -u mks git -C /home/mks/moonraker describe --tags)" >> /home/mks/versions
