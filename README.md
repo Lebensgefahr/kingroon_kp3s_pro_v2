@@ -32,7 +32,7 @@ First of all clone [armbian repository](https://github.com/armbian/build.git) an
 
 ```bash
 mkdir Kingroon && cd Kingroon && git clone https://github.com/armbian/build.git && 
-cd armbian-mkspi && 
+cd build && 
 ./compile.sh
 ```
 <details>
@@ -70,7 +70,7 @@ Prepare USB flash drive:
 
 ```bash
 
-sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
+sudo dd if=$(ls build/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
 ```
 And copy armbian image somewhere to root partiotion of this flash drive to have it after booting available.
 Then we need to boot printer from this USB flash drive. Uboot bootloader autoboot process can be interrupted by hiting any key. But it has no bootdelay for that by default. So you need to hiting any key too fast and sometimes it works. To do that you need to start serial communication program like picocom:
@@ -143,7 +143,7 @@ Deploy an builded Armbian image to /dev/sdb
 
 ```bash
 
-sudo dd if=$(ls armbian-mkspi/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
+sudo dd if=$(ls build/output/images/*.img) of=/dev/sdb bs=1M status=progress && sync
 ```
 It will mount automatically again after dd finishes.
 Now we need to copy the linux-headers package and an old dtb file and old configurations to EMMC (with a new dtb wifi is not working).
@@ -151,7 +151,7 @@ Now we need to copy the linux-headers package and an old dtb file and old config
 linux-headers package:
 ```bash
 
-sudo cp $(ls armbian-mkspi/output/debs/linux-headers*.deb) /media/$USER/armbi_root/root/
+sudo cp $(ls build/output/debs/linux-headers*.deb) /media/$USER/armbi_root/root/
 ```
 old dtb file:
 ```bash
