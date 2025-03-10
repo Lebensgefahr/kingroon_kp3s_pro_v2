@@ -12,29 +12,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Free Disk Space Before Build
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/local/lib/android/sdk/ndk
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo apt-get clean
+          sudo apt-get -y autoremove
+          sudo apt-get -y autoclean
+          echo "Disk space after cleanup:"
+          df -h
+
       - name: Build image
         run: |
           git clone https://github.com/armbian/build.git
           cp -r ./files/userpatches/ build
           cd build
-          ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=full PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
+          ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=shallow PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
           LOOP_DEV=$(sudo losetup --partscan --find --show ./output/images/*.img)
           sudo mount "$LOOP_DEV"p2 /mnt
           export KERNEL_VERSION="$(awk '/Kernel:/ {print $2}' /mnt/home/mks/versions)"
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y libelf-dev bison flex mcedit gcc-aarch64-linux-gnu make
+          cp /mnt/home/mks/versions ..
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libelf-dev bison flex mcedit gcc-aarch64-linux-gnu make
           git clone https://github.com/Lebensgefahr/rockchip_wlan.git
           dpkg-deb -x ./output/debs/linux-headers-* ~/headers
-          rsync -a --ignore-existing ~/headers /
-          pushd /usr/src/linux-headers-$KERNEL_VERSION
-          make ARCH="arm64" olddefconfig CROSS_COMPILE=aarch64-linux-gnu-
-          make ARCH="arm64" scripts CROSS_COMPILE=aarch64-linux-gnu-
-          make ARCH="arm64" M=scripts/mod/ CROSS_COMPILE=aarch64-linux-gnu-
+          sudo rsync -a --ignore-existing ~/headers/ /
+          pushd /usr/src/linux-headers-"$KERNEL_VERSION"
+          sudo make ARCH="arm64" olddefconfig CROSS_COMPILE=aarch64-linux-gnu-
+          sudo make ARCH="arm64" scripts CROSS_COMPILE=aarch64-linux-gnu-
+          sudo make ARCH="arm64" M=scripts/mod/ CROSS_COMPILE=aarch64-linux-gnu-
           popd
           cd rockchip_wlan/rtl8723bs
           make KVER=$KERNEL_VERSION ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-          make -B MODDESTDIR=/mnt/lib/modules/$KERNEL_VERSION/kernel/drivers/staging/rtl8723bs/ install
-          cp /mnt/home/mks/versions ..
+          sudo make KVER="$KERNEL_VERSION" MODDESTDIR=/mnt/lib/modules/"$KERNEL_VERSION"/kernel/drivers/staging/rtl8723bs/ install
+          sudo depmod -b /mnt -a "$KERNEL_VERSION"
+          sudo bash -c 'cat <<EOF >/mnt/etc/modprobe.d/blacklist-r8723bs.conf
+          blacklist r8723bs
+          EOF'
           sudo umount /mnt
 
       - name: Archiving artifacts
