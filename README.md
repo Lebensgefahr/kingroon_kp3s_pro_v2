@@ -26,13 +26,12 @@
 
 ### Building your own Armbian image
 
-**Don't want to build? Try this [one](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest)**. Klipper, Moonraker, Fluidd, printer.cfg and everything described in this article are included.
+**Don't want to build? Try this [one](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest)**. Klipper, Moonraker, Fluidd, rtl8723bs alternative kernel module, printer.cfg and everything described in this article are included.
 
-**mkspi repo is not up to date and building process will fail. Try to follow this steps https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/issues/3#issuecomment-2333484221**
-First of all clone [mkspi repository](https://github.com/redrathnure/armbian-mkspi) and build your own Armbian image. Assumed docker is already installed and you can resolve any issues caused by missing dependencies.
+First of all clone [armbian repository](https://github.com/armbian/build.git) and build your own Armbian image. Assumed docker is already installed and you can resolve any issues caused by missing dependencies.
 
 ```bash
-mkdir Kingroon && cd Kingroon && git clone https://github.com/redrathnure/armbian-mkspi && 
+mkdir Kingroon && cd Kingroon && git clone https://github.com/armbian/build.git && 
 cd armbian-mkspi && 
 ./compile.sh
 ```
@@ -93,10 +92,21 @@ Hit any key to stop autoboot:  0
 Change boot_targets environment variable:
 
 ```
-setenv boot_targets "usb0 mmc1 mmc0 pxe dhcp" 
+setenv boot_targets "usb0" 
 ```
 By default the first booting device is mmc1.
+
+Changes for mkspi board already merged with armbian repository. In case you have an old armbian on your emmc it is necessary to specify fdtfile:
+
+```
+setenv fdtfile "rockchip/rk3328-mkspi.dtb"
+```
+
 And type "boot".
+
+In case you are using [Release](https://github.com/Lebensgefahr/kingroon_kp3s_pro_v2/releases/latest) image just login into console and connect your printer to wifi access point.
+Change path to your MCUs and printer should start working properly.
+If you prefer default rtl8723bs driver just remove file /etc/modprobe.d/blacklist-r8723bs.conf and reboot your printer.
 When it boots you should follow the provided steps (create root password, user etc). After that you can use dd to deploy armbian image to /dev/mmcblk1. Reboot and repeat the previous step. 
 ### Creating EMMC backup and preparing it for the first boot
 
