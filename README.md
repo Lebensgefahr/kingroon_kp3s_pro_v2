@@ -759,6 +759,22 @@ heater_temp: 50.0
 ```
 </details>
 
+### Idler pulley adjustment screw
+
+<details>
+  <summary>Expand</summary>
+The standard adjustment screw for the idler pulley's tension is threaded directly into the aluminum extruder body. 
+However, the spring's high stiffness can lead to thread stripping or hole wear over time. 
+To mitigate this and increase the component's lifespan, the default adjustment screw can be modified or replaced as described below.
+
+![Screw](./pictures/screw.png)
+Screw size: M3x30
+![Nut](./pictures/nut.png)
+![overview](./pictures/idler_pulley_tensioner.jpg)
+
+</details>
+
+
 ### Katapult bootloader
 
 <details>
