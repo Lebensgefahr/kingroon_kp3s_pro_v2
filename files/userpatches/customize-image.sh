@@ -37,7 +37,8 @@ Main() {
 			;;
 		jammy)
                         set -ex
-                        cp /tmp/overlay/rk3328-roc-cc.dtb /boot/dtb/rockchip/rk3328-mkspi.dtb
+#                        cp /tmp/overlay/rk3328-roc-cc.dtb /boot/dtb/rockchip/rk3328-mkspi.dtb
+                        cp /tmp/overlay/rk3328-mkspi.dtb /boot/dtb/rockchip/rk3328-mkspi.dtb
 #                        cp /tmp/overlay/wpa_supplicant-wlan0.conf /etc/wpa_supplicant/
                         rm /root/.not_logged_in_yet
                         rm -f /etc/systemd/system/getty@.service.d/override.conf
