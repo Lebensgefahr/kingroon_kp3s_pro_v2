@@ -59,7 +59,9 @@ jobs:
           sudo umount /mnt
 
       - name: Archiving artifacts
-        run: cd build && zip -r output.zip output
+        run: |
+          cd build
+          ZSTD_CLEVEL=19 tar --zstd -cf output.tar.zst output
 
       - name: Create release
         id: create_release
@@ -79,7 +81,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/output.zip
-          asset_name: output.zip
-          asset_content_type: application/zip
+          asset_path: build/output.tar.zst
+          asset_name: output.tar.zst
+          asset_content_type: application/octet-stream
 
