@@ -30,6 +30,8 @@ jobs:
 
       - name: Build image
         run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libelf-dev bison flex mcedit gcc-aarch64-linux-gnu make qemu-user-static
           git clone https://github.com/armbian/build.git
           cp -r ./files/userpatches/ build
           cd build
@@ -38,8 +40,7 @@ jobs:
           sudo mount "$LOOP_DEV"p2 /mnt
           export KERNEL_VERSION="$(awk '/Kernel:/ {print $2}' /mnt/home/mks/versions)"
           cp /mnt/home/mks/versions ..
-          sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libelf-dev bison flex mcedit gcc-aarch64-linux-gnu make
+
           git clone https://github.com/Lebensgefahr/rockchip_wlan.git
           dpkg-deb -x ./output/debs/linux-headers-* ~/headers
           sudo rsync -a --ignore-existing ~/headers/ /
