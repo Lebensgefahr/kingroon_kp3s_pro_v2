@@ -882,3 +882,68 @@ You can also check if the bootloader is available by running:
   </tr>
 </table>
 
+### Known issues
+
+<details>
+  <summary>Expand</summary>
+
+If your console log looks like below and the last string is "INFO:    SPSR = 0x3c9" then you have
+a hardware problems like memory corruption.
+In normal boot string "INFO:    SPSR = 0x3c9" should be followed by
+uboot hello message "U-Boot 2022.07-armbian (Jan 24 2024 - 15:17:23 +0000)".
+In this case you will not get u-boot prompt.
+
+```
+DDR version 1.16 20190528
+ID:0x805 N
+In
+DDR3
+333MHz
+Bus Width=32 Col=10 Bank=8 Row=15 CS=1 Die Bus-Width=16 Size=1024MB
+ddrconfig:1
+OUT
+Boot1 Release Time: May 13 2019 17:34:36, version: 2.50
+ChipType = 0x11, 1116
+mmc2:cmd19,100
+SdmmcInit=2 0
+BootCapSize=2000
+UserCapSize=7456MB
+FwPartOffset=2000 , 2000
+SdmmcInit=0 NOT PRESENT
+StorageInit ok = 42740
+Raw SecureMode = 0
+SecureInit read PBA: 0x4
+SecureInit read PBA: 0x404
+SecureInit read PBA: 0x804
+SecureInit read PBA: 0xc04
+SecureInit read PBA: 0x1004
+SecureInit ret = 0, SecureMode = 0
+atags_set_bootdev: ret:(0)
+GPT 0x337a9f0 signature is wrong
+recovery gpt...
+GPT 0x337a9f0 signature is wrong
+recovery gpt fail!
+LoadTrust Addr:0x4000
+No find bl30.bin
+No find bl32.bin
+Load uboot, ReadLba = 2000
+Load OK, addr=0x200000, size=0xaecb0
+RunBL31 0x40000
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v1.3(debug):403e0b816
+NOTICE:  BL31: Built : 14:13:08, Aug 11 2020
+NOTICE:  BL31:Rockchip release version: v1.3
+INFO:    ARM GICv2 driver initialized
+INFO:    Using opteed sec cpu_context!
+INFO:    boot cpu mask: 1
+INFO:    plat_rockchip_pmu_init: pd status 0xe
+INFO:    BL31: Initializing runtime services
+WARNING: No OPTEE provided by BL2 boot loader, Booting device without OPTEE initialization. SMC`s destined for OPTEE will return SMC_UNK
+ERROR:   Error initializing runtime service opteed_fast
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+```
+
+</details>
