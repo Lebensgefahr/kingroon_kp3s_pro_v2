@@ -59,7 +59,8 @@ EOF
                         apt-get install -y gpiod
                         sed -i 's/set -e/set -ex/' ./kiauh.sh
                         sed -i 's/clear -x//' ./kiauh.sh
-			printf '2\n1\n1\n1\n1\n2\nY\n4\nn\nB\nQ\n' |sudo -u mks ./kiauh.sh
+#			printf '2\n1\n1\n1\n1\n2\nY\n4\nn\nB\nQ\n' |sudo -u mks ./kiauh.sh
+                        printf '1\n1\n1\nn\n2\nY\n4\nY\n80\nB\nQ\n'|sudo -u mks ./kiauh.sh
                         echo "OS: $(cat /etc/issue)" >> /home/mks/versions
                         echo "Kernel: $(strings /boot/Image |awk '/Linux version/ {print $3; exit}')" >>/home/mks/versions
                         echo "Kiauh: $(sudo -u mks git -C /home/mks/kiauh describe --tags)" >> /home/mks/versions
@@ -85,8 +86,8 @@ EOF
 			ln -s /var/log/moonraker/moonraker.log /home/mks/printer_data/logs/moonraker.log
 			ln -s /var/log/klipper/klippy.log /home/mks/printer_data/logs/klippy.log
 
-			ln -s /var/log/nginx/fluidd-access.log /home/mks/printer_data/logs/fluidd-access.log
-			ln -s /var/log/klipper/fluidd-error.log /home/mks/printer_data/logs/fluidd-error.log
+			ln -fs /var/log/nginx/fluidd-access.log /home/mks/printer_data/logs/fluidd-access.log
+			ln -fs /var/log/klipper/fluidd-error.log /home/mks/printer_data/logs/fluidd-error.log
 			chage -d 0 root
 cat <<EOF >/lib/systemd/system/mks-shutdown.service
 [Unit]

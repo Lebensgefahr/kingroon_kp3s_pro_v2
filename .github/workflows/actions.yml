@@ -2,11 +2,12 @@ on:
   push:
     tags:
       - '*'
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
 
       - name: Checkout code
@@ -32,6 +33,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libelf-dev bison flex mcedit gcc-aarch64-linux-gnu make qemu-user-static
+          cat /proc/sys/fs/binfmt_misc/qemu-aarch64
+          sudo sh -c 'echo -1 > /proc/sys/fs/binfmt_misc/qemu-aarch64'
+          sudo sh -c 'echo ":qemu-aarch64:M::\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/libexec/qemu-binfmt/aarch64-binfmt-P:CFP" > /proc/sys/fs/binfmt_misc/register'
+          cat /proc/sys/fs/binfmt_misc/qemu-aarch64
           git clone https://github.com/armbian/build.git
           cp -r ./files/userpatches/ build
           cd build
@@ -64,24 +69,13 @@ jobs:
           ZSTD_CLEVEL=19 tar --zstd -cf output.tar.zst output
 
       - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: 'Release'
-          body_path: versions
+          tag_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
-
-      - name: Upload files to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/output.tar.zst
-          asset_name: output.tar.zst
-          asset_content_type: application/octet-stream
-
+          body_path: versions
+          files: |
+            build/output.tar.zst
