@@ -46,21 +46,21 @@ jobs:
           export KERNEL_VERSION="$(awk '/Kernel:/ {print $2}' /mnt/home/mks/versions)"
           cp /mnt/home/mks/versions ..
 
-          git clone https://github.com/Lebensgefahr/rockchip_wlan.git
-          dpkg-deb -x ./output/debs/linux-headers-* ~/headers
-          sudo rsync -a --ignore-existing ~/headers/ /
-          pushd /usr/src/linux-headers-"$KERNEL_VERSION"
-          sudo make ARCH="arm64" olddefconfig CROSS_COMPILE=aarch64-linux-gnu-
-          sudo make ARCH="arm64" scripts CROSS_COMPILE=aarch64-linux-gnu-
-          sudo make ARCH="arm64" M=scripts/mod/ CROSS_COMPILE=aarch64-linux-gnu-
-          popd
-          cd rockchip_wlan/rtl8723bs
-          make KVER=$KERNEL_VERSION ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-          sudo make KVER="$KERNEL_VERSION" MODDESTDIR=/mnt/lib/modules/"$KERNEL_VERSION"/kernel/drivers/staging/rtl8723bs/ install
-          sudo depmod -b /mnt -a "$KERNEL_VERSION"
-          sudo bash -c 'cat <<EOF >/mnt/etc/modprobe.d/blacklist-r8723bs.conf
-          blacklist r8723bs
-          EOF'
+          #git clone https://github.com/Lebensgefahr/rockchip_wlan.git
+          #dpkg-deb -x ./output/debs/linux-headers-* ~/headers
+          #sudo rsync -a --ignore-existing ~/headers/ /
+          #pushd /usr/src/linux-headers-"$KERNEL_VERSION"
+          #sudo make ARCH="arm64" olddefconfig CROSS_COMPILE=aarch64-linux-gnu-
+          #sudo make ARCH="arm64" scripts CROSS_COMPILE=aarch64-linux-gnu-
+          #sudo make ARCH="arm64" M=scripts/mod/ CROSS_COMPILE=aarch64-linux-gnu-
+          #popd
+          #cd rockchip_wlan/rtl8723bs
+          #make KVER=$KERNEL_VERSION ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+          #sudo make KVER="$KERNEL_VERSION" MODDESTDIR=/mnt/lib/modules/"$KERNEL_VERSION"/kernel/drivers/staging/rtl8723bs/ install
+          #sudo depmod -b /mnt -a "$KERNEL_VERSION"
+          #sudo bash -c 'cat <<EOF >/mnt/etc/modprobe.d/blacklist-r8723bs.conf
+          #blacklist r8723bs
+          #EOF'
           sudo umount /mnt
 
       - name: Archiving artifacts
