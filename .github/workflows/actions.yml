@@ -40,7 +40,7 @@ jobs:
           git clone https://github.com/armbian/build.git
           cp -r ./files/userpatches/ build
           cd build
-          ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=jammy BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=shallow PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
+          ./compile.sh  BOARD=mkspi BRANCH=current RELEASE=noble BSPFREEZE=yes BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img KERNEL_GIT=shallow PROGRESS_LOG_TO_FILE=yes PROGRESS_DISPLAY=plain CLEAN_LEVEL=make,debs,make-uboot INCLUDE_HOME_DIR=yes
           LOOP_DEV=$(sudo losetup --partscan --find --show ./output/images/*.img)
           sudo mount "$LOOP_DEV"p2 /mnt
           export KERNEL_VERSION="$(awk '/Kernel:/ {print $2}' /mnt/home/mks/versions)"
