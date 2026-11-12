@@ -36,6 +36,8 @@ Main() {
 			# your code here
 			;;
 		jammy)
+                        ;;
+                noble)
                         set -ex
 #                        cp /tmp/overlay/rk3328-roc-cc.dtb /boot/dtb/rockchip/rk3328-mkspi.dtb
                         cp /tmp/overlay/rk3328-mkspi.dtb /boot/dtb/rockchip/rk3328-mkspi.dtb
